@@ -1,0 +1,28 @@
+# Excluded from the distributable zip.
+#
+# The last group is what the public mirror carries and a store does not: the
+# sources, the tooling that compiles them, and the pages written for whoever is
+# reading the mirror. The zip ships the compiled files, the PHP and readme.txt.
+/src
+/node_modules
+/vendor
+/tests
+/.git
+/.github
+.distignore
+.gitignore
+.editorconfig
+*.map
+*.log
+composer.json
+composer.lock
+package.json
+package-lock.json
+phpcs.xml.dist
+phpstan.neon.dist
+phpunit.xml.dist
+tsconfig.json
+.npm-cache
+/docs
+README.md
+webpack.config.js

@@ -1,0 +1,967 @@
+/**
+ * Checkout preview.
+ *
+ * Two layers live here. The card around the preview is ours and uses the
+ * WordPress design-system tokens like the rest of the admin app. Everything
+ * inside `.cbwb-preview__checkout` is a stand-in for WooCommerce's checkout
+ * CSS: it is scoped to the preview so it cannot leak into the admin screen,
+ * and every rule sits inside `:where()` so it carries no specificity at all —
+ * whenever `wc-blocks-style` (or any theme override of it) is on the page,
+ * WooCommerce's own rules win.
+ */
+
+/* Two panes up, the canvas is the tallest thing on the screen. */
+$cbwb-breakpoint-two: 1024px;
+
+.cbwb-preview {
+
+	/*
+	 * The title block and the tools block are centred against each other. Every
+	 * other pane header aligns on the baseline, which works where both sides are
+	 * text; here the right-hand side is two 40px controls with no text of their
+	 * own on the header's first line, so a baseline hangs them off the top of the
+	 * line while the two-line title block drops away below them.
+	 *
+	 * `.cbwb-pane__header` is on the selector because this sheet is `@use`d at
+	 * the top of the app's: at equal specificity the pane's own `align-items`
+	 * wins on source order, and this rule would do nothing at all.
+	 */
+	&__header.cbwb-pane__header {
+		align-items: center;
+		row-gap: 8px;
+	}
+
+	&__titles {
+		flex: 1 1 220px;
+		min-width: 0;
+	}
+
+	/* Grey picked against white fails on the header tint; this clears AA on it. */
+	&__caption {
+		margin: 2px 0 0;
+		max-width: 46ch;
+		color: var(--cbwb-text-muted-canvas);
+		font-size: 12px;
+	}
+
+	/*
+	 * Live mode puts two more controls in here, which at three panes is more
+	 * than the header band is wide. `0 1 auto` is what lets the row give way
+	 * and wrap onto a second line rather than run off the end of the pane:
+	 * without the shrink the block sizes itself to its content and simply
+	 * overflows, taking "Open page" with it.
+	 */
+	&__tools {
+		flex: 0 1 auto;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 8px;
+		min-width: 0;
+	}
+
+	/*
+	 * The segmented control and the button beside it are both 40px, so the two
+	 * agree however the header wraps. The control's own height is whatever its
+	 * text and padding add up to (37.5px), which is close enough to the button's
+	 * to look like a mistake rather than a choice, so it is set outright here.
+	 *
+	 * `.cbwb-segmented` is on the selector for the margin alone: this sheet is
+	 * `@use`d at the top of the app's, so at equal specificity the control's own
+	 * `margin-bottom: 16px` — meant for the stacked controls in the settings
+	 * pane — wins here, and 16px under a flex item is 8px of the misalignment
+	 * the rest of this rule exists to prevent.
+	 */
+	&__viewport.cbwb-segmented,
+	&__mode.cbwb-segmented {
+		flex: 0 0 auto;
+		margin: 0;
+		min-width: 160px;
+
+		/*
+		 * The track is the canvas colour and the chosen option the white chip on
+		 * it — the same reading as everywhere else in the app, except that the
+		 * near-white track it uses on a white header would vanish on this one.
+		 */
+		.cbwb-segmented__options {
+			box-sizing: border-box;
+			height: 40px;
+			background: var(--cbwb-surface-canvas);
+			box-shadow: inset 0 0 0 1px var(--cbwb-stroke-canvas);
+		}
+
+		.cbwb-segmented__label {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+			padding: 0 12px;
+			color: var(--cbwb-text-muted-canvas);
+		}
+
+		.cbwb-segmented__input:checked + .cbwb-segmented__label {
+			box-shadow: 0 0 0 1px var(--cbwb-stroke-canvas);
+			color: var(--cbwb-text);
+		}
+	}
+
+	/* Two words, where the widths above are sized for "Desktop" and "Mobile". */
+	&__mode.cbwb-segmented {
+		min-width: 120px;
+	}
+
+	// Two icons need no minimum: the control is as wide as its two squares.
+	&__viewport.cbwb-segmented {
+		min-width: 0;
+	}
+
+	/* A secondary button is transparent, which on the tint reads as disabled. */
+	&__open.components-button,
+	&__reset.components-button {
+		background: var(--cbwb-surface);
+	}
+
+	/*
+	 * The switch that says who the previewed checkout is pretending to be. The
+	 * control ships with a bottom margin meant for a stacked settings form,
+	 * which in this row of 40px controls is 24px of the header hanging below
+	 * everything beside it.
+	 */
+	&__customer.components-base-control {
+		flex: 0 0 auto;
+		margin: 0;
+
+		.components-base-control__field {
+			margin-bottom: 0;
+		}
+	}
+
+	/* Positioned so a selected field's offsetTop is measured from here. */
+	&__frame {
+		position: relative;
+
+		/* The mobile frame stands for a 390px device, borders and all. */
+		box-sizing: border-box;
+
+		/* The margin is the canvas showing round the edges of the sheet. */
+		margin: var(--cbwb-gap-lg);
+		background: #fff;
+
+		/*
+		 * A sheet of paper on the canvas: the shadow is what separates it from
+		 * the ground, so there is no line drawn round it as well.
+		 */
+		border: 0;
+		border-radius: var(--cbwb-radius);
+		box-shadow: var(--cbwb-shadow-sheet);
+		padding: 24px;
+		max-height: 70vh;
+		overflow: auto;
+		overscroll-behavior: contain;
+
+		&:focus-visible {
+			outline: 2px solid var(--wpds-color-stroke-focus, #3858e9);
+			outline-offset: 2px;
+		}
+
+		/* The same sheet, but a device standing on the canvas: bezel and all. */
+		&.is-mobile {
+			max-width: 390px;
+			margin-inline: auto;
+			padding: 16px;
+			border: 8px solid var(--cbwb-text);
+			border-radius: 20px;
+		}
+
+		/* The canvas fills its pane and does its own scrolling. */
+		@media (min-width: $cbwb-breakpoint-two) {
+			flex: 1 1 auto;
+			min-height: 0;
+			max-height: none;
+		}
+	}
+
+	/*
+	 * A merchant field is the one thing in the picture that answers a click, so
+	 * it is the one thing that reacts to a pointer.
+	 */
+	&__field {
+		position: relative;
+		cursor: pointer;
+		border-radius: 4px;
+
+		/*
+		 * Two half-width fields in a row sit side by side, the way WooCommerce
+		 * lays its own pairs out; anything full width takes the row to itself.
+		 */
+		&.is-full {
+			flex: 0 0 100%;
+			max-width: 100%;
+		}
+
+		&.is-half {
+			flex: 1 0 calc(50% - 12px);
+			max-width: calc(50% - 12px);
+		}
+
+		&:hover {
+			outline: 2px solid var(--cbwb-stroke-accent-weak, #b9c5f7);
+			outline-offset: 2px;
+			box-shadow: 0 0 0 6px var(--cbwb-surface-selected, #f0f3ff);
+		}
+
+		&.is-selected {
+			outline: 2px solid var(--wpds-color-stroke-interactive-brand, #3858e9);
+			outline-offset: 2px;
+			box-shadow: 0 0 0 6px var(--cbwb-surface-selected, #f0f3ff);
+		}
+
+		/*
+		 * A field whose type nothing is providing right now. Drawn faint rather
+		 * than dropped: the row is still in the outline beside this, and a
+		 * canvas that quietly left it out would look like the field had been
+		 * deleted. The `title` on the same element says why.
+		 */
+		&.is-inactive {
+			opacity: 0.45;
+			filter: grayscale(1);
+		}
+
+		/*
+		 * Live mode. Nothing here answers a click any more — the controls do —
+		 * so the field stops offering to be picked.
+		 */
+		&.is-live {
+			cursor: auto;
+
+			&:hover {
+				outline: 0;
+				box-shadow: none;
+			}
+		}
+	}
+
+	/* Decorative twin of the outline's "Editing" chip. */
+	&__editing {
+		position: absolute;
+		top: -10px;
+		inset-inline-end: -2px;
+		z-index: 2;
+		padding: 0 6px;
+		border-radius: 999px;
+		background: var(--wpds-color-stroke-interactive-brand, #3858e9);
+		color: #fff;
+		font-size: 10px;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		line-height: 16px;
+		white-space: nowrap;
+	}
+
+	/*
+	 * The merchant's own fields for one section, laid out as a wrapping row.
+	 * Each box keeps its own height: a label that wraps to a second line must
+	 * not stretch the field beside it, or the selection outline ends up drawn
+	 * around empty space.
+	 */
+	&__fields {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 0 12px;
+		width: 100%;
+	}
+
+	/* The last thing before the button, which has no heading of its own. */
+	&__before-place-order {
+		margin-bottom: 24px;
+	}
+
+	/* The one focusable thing in the canvas: a way into each section. */
+	&__add {
+		display: inline-block;
+
+		/* The shipping step offers two positions, so it carries two of these. */
+		+ .cbwb-preview__add {
+			margin-left: 8px;
+		}
+
+		.cbwb-add-field.components-button {
+			height: 40px;
+		}
+	}
+
+	/* The form and the order summary, side by side as at checkout. */
+	&__layout {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		gap: 24px;
+
+		> .wc-block-checkout__form {
+			flex: 1 1 380px;
+			min-width: 0;
+		}
+	}
+
+	&__sidebar {
+		flex: 1 1 240px;
+		box-sizing: border-box;
+		min-width: 0;
+		padding: 16px;
+		border: 1px solid rgb(43 45 47 / 20%);
+		border-radius: 4px;
+		background: #fff;
+	}
+
+	&__totals {
+		display: flex;
+		justify-content: space-between;
+		gap: 12px;
+		margin: 8px 0 0;
+
+		&.is-total {
+			padding-top: 8px;
+			border-top: 1px solid rgb(43 45 47 / 20%);
+			font-weight: 600;
+		}
+	}
+
+	/*
+	 * WooCommerce keeps the checkout's coupon field folded behind a link in the
+	 * order summary, so that is what the picture shows — and, like every other
+	 * row in the picture, clicking it opens what it stands for.
+	 */
+	&__coupon {
+		margin-top: 12px;
+		padding-top: 12px;
+		border-top: 1px solid rgb(43 45 47 / 20%);
+		color: #2b2d2f;
+		font-size: 14px;
+		text-decoration: underline;
+	}
+
+	/* A mobile frame is one column, so the summary goes under the form. */
+	&__frame.is-mobile &__layout {
+		display: block;
+	}
+
+	&__frame.is-mobile &__sidebar {
+		margin-top: 24px;
+	}
+}
+
+/* The preview itself is aria-hidden; these carry its meaning instead. */
+.cbwb-preview__summary,
+.cbwb-preview__viewport .cbwb-segmented__legend,
+.cbwb-preview__mode .cbwb-segmented__legend {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* ------------------------------------------- WooCommerce checkout stand-in. */
+
+:where(.cbwb-preview__checkout) {
+	color: #2b2d2f;
+	font-size: 14px;
+	line-height: 1.5;
+	text-align: start;
+
+	.wc-block-components-checkout-step {
+		margin: 0 0 24px;
+	}
+
+	.wc-block-components-checkout-step:last-child {
+		margin-bottom: 0;
+	}
+
+	.wc-block-components-checkout-step__heading-container {
+		margin-bottom: 16px;
+	}
+
+	.wc-block-components-title {
+		margin: 0;
+		font-size: 20px;
+		font-weight: 500;
+		line-height: 1.4;
+	}
+
+	/*
+	 * The stub of the order-information section, which core only renders once
+	 * there is something to put in it.
+	 */
+	.is-placeholder .wc-block-components-title {
+		color: #646970;
+		font-size: 15px;
+	}
+
+	.wc-block-components-checkout-step__description {
+		margin: 4px 0 0;
+		color: #646970;
+		font-size: 13px;
+		line-height: 1.4;
+	}
+
+	.wc-block-components-checkout-step__content > * {
+		margin-bottom: 16px;
+	}
+
+	.wc-block-components-checkout-step__content > :last-child {
+		margin-bottom: 0;
+	}
+
+	/* Core lays the shipping address out as a two-column wrap. */
+	.wc-block-checkout__shipping-fields .wc-block-components-address-form {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0 12px;
+	}
+
+	.wc-block-components-text-input,
+	.wc-block-components-select-input,
+	.wc-block-components-state-input,
+	.wc-block-components-country-input {
+		position: relative;
+		box-sizing: border-box;
+		flex: 1 0 calc(50% - 12px);
+	}
+
+	/*
+	 * Only text inputs carry their row gap on the wrapper. Select wrappers
+	 * stay at 0 (as in core) and the nested select box carries the 12px,
+	 * so a City | State row lines up.
+	 */
+	.wc-block-components-text-input,
+	.wc-blocks-components-select {
+		margin-top: 12px;
+	}
+
+	.wc-block-components-address-form__address_1,
+	.wc-block-components-address-form__address_2-toggle,
+	.wc-block-components-country-input,
+	.wc-block-components-checkbox {
+		flex: 0 0 100%;
+	}
+
+	.wc-block-components-checkout-step__content > :first-child,
+	.wc-block-components-address-form > :first-child {
+		margin-top: 0;
+	}
+
+	.wc-block-components-address-form .wc-block-components-checkbox {
+		margin-top: 16px;
+	}
+
+	/* Core folds address line 2 away behind a link until it is wanted. */
+	.wc-block-components-address-form__address_2-toggle {
+		display: inline-block;
+		width: 100%;
+		margin-top: 12px;
+		text-align: left;
+		cursor: pointer;
+	}
+
+	/*
+	 * Every box a merchant field can be, not just the plain text one: a date or
+	 * a time input is drawn by the browser, and left to its intrinsic width it
+	 * sits half as wide as the field beside it with the label overhanging.
+	 * WooCommerce's own sheet covers all of these but the date and the time,
+	 * and outranks this rule wherever it is loaded.
+	 */
+	input[type="text"],
+	input[type="email"],
+	input[type="tel"],
+	input[type="number"],
+	input[type="url"],
+	input[type="date"],
+	input[type="time"],
+	select {
+		box-sizing: border-box;
+		width: 100%;
+		height: 50px;
+		margin: 0;
+		padding: 16px 12px;
+		border: 1px solid rgb(43 45 47 / 40%);
+		border-radius: 4px;
+		background: #fff;
+		color: #2b2d2f;
+		font-family: inherit;
+		font-size: 14px;
+		line-height: 1.4;
+	}
+
+	select {
+		appearance: none;
+		padding: 22px 28px 6px 12px;
+	}
+
+	/*
+	 * An empty box keeps its label centred, the way core does — and wraps the
+	 * way core's does too. WooCommerce leaves `white-space` alone here, so a
+	 * long label runs onto a second line rather than being cut off mid-word,
+	 * which a half-width field in a pane this narrow does often.
+	 */
+	.wc-block-components-text-input label {
+		position: absolute;
+		top: 25px;
+		left: 12px;
+		transform: translateY(-50%);
+		max-width: calc(100% - 24px);
+		margin: 0;
+		color: #646970;
+		font-size: 14px;
+		line-height: 1.4;
+		overflow-wrap: break-word;
+	}
+
+	/*
+	 * Core's select is three nested boxes, each full width; leave any of them
+	 * to its intrinsic size and the control shrinks away from the chevron.
+	 */
+	.wc-blocks-components-select {
+		width: 100%;
+		max-width: none;
+	}
+
+	.wc-blocks-components-select__container {
+		position: relative;
+		box-sizing: border-box;
+		width: 100%;
+	}
+
+	.wc-blocks-components-select__select {
+		width: 100%;
+		max-width: none;
+	}
+
+	.wc-blocks-components-select__label {
+		position: absolute;
+		top: 8px;
+		left: 12px;
+		max-width: calc(100% - 24px);
+		margin: 0;
+		overflow: hidden;
+		color: #646970;
+		font-size: 11px;
+		line-height: 1.4;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		z-index: 1;
+	}
+
+	.wc-blocks-components-select__expand {
+		position: absolute;
+		top: 50%;
+		right: 12px;
+		transform: translateY(-50%);
+		fill: #2b2d2f;
+	}
+
+	.wc-block-components-checkbox label {
+		position: relative;
+		display: inline-flex;
+		align-items: flex-start;
+		gap: 12px;
+		margin: 0;
+		font-size: 14px;
+		line-height: 20px;
+	}
+
+	input[type="checkbox"] {
+		appearance: none;
+		flex: 0 0 auto;
+		box-sizing: border-box;
+		width: 20px;
+		min-width: 20px;
+		height: 20px;
+		margin: 0;
+		border: 1px solid rgb(43 45 47 / 48%);
+		border-radius: 4px;
+		background: #fff;
+
+		/*
+		 * wp-admin paints every ticked box in the admin colour and draws a
+		 * white tick into it through this pseudo-element. The box here is
+		 * core's checkout box, white with the black SVG tick beside it, and a
+		 * merchant was seeing both ticks in a blue box.
+		 */
+		&::before,
+		&:checked::before {
+			content: none;
+		}
+
+		&:checked {
+			border-color: rgb(43 45 47 / 48%);
+			background: #fff;
+		}
+	}
+
+	.wc-block-components-checkbox__mark {
+		position: absolute;
+		width: 15px;
+		height: 15px;
+		margin-top: 1px;
+		margin-left: 3px;
+		fill: #000;
+		// As in core: the tick is drawn over the box, and a click on it has to
+		// reach the box underneath.
+		pointer-events: none;
+	}
+
+	/* The tick belongs to a ticked box only. */
+	.wc-block-components-checkbox__input:not(:checked) + .wc-block-components-checkbox__mark {
+		display: none;
+	}
+
+	.wc-block-components-radio-control {
+		border: 1px solid rgb(43 45 47 / 20%);
+		border-radius: 4px;
+	}
+
+	.wc-block-components-radio-control__option {
+		position: relative;
+		display: block;
+		margin: 0;
+		padding: 16px 16px 16px 48px;
+	}
+
+	input[type="radio"] {
+		position: absolute;
+		top: 50%;
+		left: 16px;
+		transform: translateY(-50%);
+		appearance: none;
+		box-sizing: border-box;
+		width: 20px;
+		height: 20px;
+		margin: 0;
+		border: 6px solid #2b2d2f;
+		border-radius: 50%;
+		background: #fff;
+	}
+
+	.wc-block-components-radio-control__label-group {
+		display: flex;
+		justify-content: space-between;
+		gap: 8px;
+	}
+
+	.wc-block-components-radio-control__secondary-label {
+		flex: 0 0 auto;
+	}
+
+	/* Static stand-in for the terms block core renders above the actions. */
+	.wc-block-checkout__terms {
+		margin: 0 0 24px;
+		color: #646970;
+		font-size: 14px;
+		line-height: 1.4;
+	}
+
+	.wc-block-checkout__actions_row {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 8px;
+	}
+
+	.wc-block-components-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		padding: 18px 30px;
+		border: 0;
+		border-radius: 4px;
+		background: #2b2d2f;
+		color: #fff;
+		font-family: inherit;
+		font-size: 15px;
+		font-weight: 500;
+		opacity: 1;
+	}
+
+	.wc-block-checkout__add-note {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	/* ------------------------------------------------- The richer types. */
+
+	.wc-block-components-textarea-wrapper {
+		margin-top: 12px;
+
+		label {
+			display: block;
+			margin-bottom: 4px;
+			color: #2b2d2f;
+			font-size: 14px;
+			line-height: 1.4;
+		}
+	}
+
+	textarea {
+		box-sizing: border-box;
+		display: block;
+		width: 100%;
+		margin: 0;
+		padding: 12px;
+		border: 1px solid rgb(43 45 47 / 40%);
+		border-radius: 4px;
+		background: #fff;
+		color: #2b2d2f;
+		font-family: inherit;
+		font-size: 14px;
+		line-height: 1.4;
+		resize: none;
+	}
+
+	.cbwb-preview__choices {
+		margin-top: 12px;
+	}
+
+	.cbwb-preview__choices-label {
+		display: block;
+		margin-bottom: 8px;
+		color: #2b2d2f;
+		font-size: 14px;
+		line-height: 1.4;
+	}
+
+	.cbwb-preview__choices-list {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+
+		&.is-inline {
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 8px 20px;
+		}
+	}
+
+	.cbwb-preview__choice {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+
+		label {
+			margin: 0;
+			font-size: 14px;
+			line-height: 20px;
+		}
+	}
+
+	.cbwb-preview__choice input[type="radio"] {
+		position: static;
+		transform: none;
+		flex: 0 0 auto;
+		width: 18px;
+		height: 18px;
+		border-width: 1px;
+		border-color: rgb(43 45 47 / 48%);
+	}
+
+	.cbwb-preview__choice input[type="radio"]:checked {
+		border-width: 5px;
+		border-color: #2b2d2f;
+	}
+
+	.cbwb-preview__choices-empty {
+		color: #646970;
+		font-size: 13px;
+		font-style: italic;
+	}
+
+	/* Heading and paragraph: words, not a question. */
+	.cbwb-preview__content {
+		margin-top: 16px;
+	}
+
+	.cbwb-preview__heading {
+		margin: 0;
+
+		&.is-level-2 {
+			font-size: 20px;
+		}
+
+		&.is-level-3 {
+			font-size: 16px;
+		}
+
+		&.is-level-4 {
+			font-size: 14px;
+		}
+	}
+
+	.cbwb-preview__paragraph {
+		margin: 0;
+		color: #2b2d2f;
+		font-size: 14px;
+		line-height: 1.5;
+
+		&.is-empty {
+			color: #646970;
+			font-style: italic;
+		}
+	}
+
+	/*
+	 * A field of a type an add-on provided. The label stands above whatever the
+	 * add-on draws, rather than floating inside it: the control below is not
+	 * ours, so there is no telling whether it has room for a label on top of it.
+	 */
+	.cbwb-preview__registered {
+		display: block;
+	}
+
+	/*
+	 * Written as a descendant on purpose: the floating-label rule above is
+	 * `.wc-block-components-text-input label`, one step more specific than a
+	 * bare class, and the label here has to stand still.
+	 */
+	.cbwb-preview__registered .cbwb-preview__registered-label {
+		display: block;
+		position: static;
+		top: auto;
+		left: auto;
+		transform: none;
+		max-width: none;
+		margin: 0 0 6px;
+		color: #2b2d2f;
+		font-size: 14px;
+		line-height: 1.4;
+	}
+
+	/*
+	 * What stands in for a body the add-on did not register: an empty box, so
+	 * the field has the shape a question has and nothing more.
+	 */
+	.cbwb-preview__registered-placeholder {
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+		padding: 12px 16px;
+		border: 1px solid #949494;
+		border-radius: 4px;
+		background: #fff;
+	}
+
+	/* The one-line hint under a field. */
+	.cbwb-preview__help {
+		display: block;
+		margin-top: 4px;
+		color: #646970;
+		font-size: 12px;
+		line-height: 1.4;
+	}
+
+	/*
+	 * What an add-on has to say about a field in Live mode: "Also depends on the
+	 * cart." A tag rather than a line of prose, and a neutral one — nothing has
+	 * gone wrong, there is simply more to it than the preview can show.
+	 */
+	.cbwb-preview__note {
+		display: inline-block;
+		margin-top: 4px;
+		padding: 1px 6px;
+		border-radius: 999px;
+		background: #f0f0f1;
+		color: #50575e;
+		font-size: 11px;
+		line-height: 18px;
+	}
+
+	/*
+	 * The checkout's own error line, for the stores whose checkout stylesheet
+	 * is not on this screen to draw it.
+	 */
+	.wc-block-components-validation-error {
+		margin-top: 4px;
+
+		p {
+			margin: 0;
+			color: #cc1818;
+			font-size: 12px;
+			line-height: 1.4;
+		}
+	}
+
+	/*
+	 * A box with something in it floats its label to the top — core's own
+	 * behaviour, and the only way a date box works at all: the browser draws
+	 * `yyyy-mm-dd` inside it, which a centred label would sit on top of. The
+	 * label's own geometry is set further down, where it can outrank
+	 * WooCommerce's.
+	 */
+	.wc-block-components-text-input.is-active input {
+		padding: 22px 12px 6px;
+	}
+}
+
+/*
+ * Another rule that has to outrank a stylesheet we do not own.
+ * `wc-blocks-style` floats a filled box's label by scaling a 16px one down to
+ * 82%, so the text is laid out at the full 16px and only then shrunk: it runs
+ * out of room a good deal sooner than its size on screen suggests, which at
+ * half width in a pane this narrow is the difference between one line and two.
+ * Drawing the label at the size it is measured at is what keeps a label like
+ * "Preferred time (optional)" on one line.
+ */
+.cbwb-preview .cbwb-preview__checkout .wc-block-components-text-input.is-active label {
+	top: 8px;
+	transform: none;
+	font-size: 11px;
+	line-height: 1.4;
+}
+
+/*
+ * In Edit mode every control in the mock is decorative: the click belongs to
+ * the field wrapper it sits in, which is what selects the field. Labels are in
+ * the list too — a label forwards its click to the control it names, which
+ * would tick the mock's checkboxes. The ghost "Add field" buttons are the one
+ * real control in there and are deliberately left alone.
+ *
+ * This carries real specificity on purpose: it is what keeps the picture from
+ * behaving like a form now that it is no longer `inert`, so no stylesheet
+ * WooCommerce loads may outrank it. In Live mode it is off: the controls are
+ * the whole point, and nothing is selected by clicking any more.
+ */
+.cbwb-preview:not(.is-try) .cbwb-preview__checkout :is(input, select, textarea, label, svg, a),
+.cbwb-preview:not(.is-try) .cbwb-preview__checkout button:not(.cbwb-add-field) {
+	pointer-events: none;
+}
+
+/*
+ * The one rule that has to carry real specificity. wp-admin caps every select
+ * at 25rem (`.wp-core-ui select`), which is narrower than the preview at
+ * desktop width, so the control shrinks away from its container and leaves the
+ * chevron floating on its own. WooCommerce never has to fight that rule on the
+ * storefront, so nothing in `wc-blocks-style` undoes it for us.
+ */
+.cbwb-preview .cbwb-preview__checkout select {
+	max-width: none;
+}
+
+/*
+ * The asterisk a required field carries while the store marks required rather
+ * than optional. Drawn as an element here, exactly as the real checkout draws
+ * it on the fields Fieldwright renders itself, so the two agree — and
+ * named with the same custom property, so a merchant reading the canvas is
+ * reading the colour their checkout will use.
+ */
+.cbwb-preview .cbwb-required-mark {
+	margin-inline-start: 2px;
+	color: var(--cbwb-required-mark-color, #cc1818);
+}

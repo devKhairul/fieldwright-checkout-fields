@@ -1,0 +1,1908 @@
+/**
+ * Fieldwright admin styles.
+ *
+ * Colours, radii and spacing come from the WordPress design-system custom
+ * properties, each with a fallback for the versions that do not ship them yet.
+ */
+
+@use "components/Preview";
+
+/* Fields | Field settings | Preview, all three at once. */
+$cbwb-breakpoint-three: 1280px;
+
+/* Fields beside settings-or-preview. Mirrors lib/layout.ts. */
+$cbwb-breakpoint-two: 1024px;
+
+/* The fixed WordPress admin bar the panes have to clear. */
+$cbwb-admin-bar: 32px;
+
+/*
+ * The rhythm of a tab that is a stack of cards rather than the builder: the air
+ * between two cards, and the air under the last one.
+ *
+ * A literal rather than `--cbwb-gap-lg`, which is the 16px the panes are packed
+ * at. A card is a panel a merchant reads and fills in, not a pane in an
+ * application layout, and at 16px two of them read as one card with a seam. The
+ * tail is what stops the last card sitting flush against the bottom of the
+ * page.
+ */
+$cbwb-panel-gap: 24px;
+$cbwb-panel-tail: 32px;
+
+/* `.wrap`'s own top margin, which sits between the bar and the app. */
+$cbwb-wrap-top: 10px;
+
+/*
+ * The design tokens, as a mixin rather than a rule: `Popover` renders its
+ * content in a container of its own at the end of `<body>`, so the type picker
+ * is outside `.cbwb-app` and inherits nothing from it — and a custom property
+ * that is not on an ancestor is not there at all, which leaves every value that
+ * uses it at its initial one.
+ */
+@mixin cbwb-tokens {
+	--cbwb-surface: var(--wpds-color-background-surface-neutral-strong, #fff);
+	--cbwb-surface-neutral: var(--wpds-color-background-surface-neutral-weak, #f6f7f7);
+	--cbwb-stroke: var(--wpds-color-stroke-surface-neutral, #dcdcde);
+	--cbwb-stroke-accent: var(--wpds-color-stroke-interactive-brand, #3858e9);
+	--cbwb-stroke-error: var(--wpds-color-stroke-surface-error, #cc1818);
+	--cbwb-text: var(--wpds-color-foreground-content-neutral, #1e1e1e);
+	--cbwb-text-muted: var(--wpds-color-foreground-content-neutral-weak, #757575);
+
+	/* The selected row's tint and the brand text that goes with it. */
+	--cbwb-surface-selected: #f0f3ff;
+	--cbwb-surface-selected-strong: #dfe5ff;
+	--cbwb-stroke-accent-weak: #b9c5f7;
+	--cbwb-text-accent: var(--wpds-color-foreground-content-info, #2145e6);
+
+	/*
+	 * The ground the checkout preview floats on.
+	 *
+	 * Literals rather than `--wpds-*` lookups: the neutral-weak token the rest of
+	 * the app reaches for *is* the page behind the panes, so a canvas painted
+	 * with it would read as a hole in the card rather than a surface of its own.
+	 * These are several steps darker and a shade cooler than that, and
+	 * deliberately not the blue of `--cbwb-surface-selected`, which already means
+	 * "selected". The tint has to carry the whole difference between this pane
+	 * and the two white ones beside it, so it is far enough off white to be
+	 * unmistakable at arm's length; the header is one step back up so the strip
+	 * of controls still reads as a header rather than more canvas.
+	 */
+	--cbwb-surface-canvas: #e1e5ec;
+	--cbwb-surface-canvas-header: #e9ecf1;
+
+	/* The canvas pane's outline, a step darker than the other panes' too. */
+	--cbwb-stroke-canvas: #c9cfd8;
+
+	/* Muted text dark enough to clear AA on the tint; the app grey is not. */
+	--cbwb-text-muted-canvas: #50575e;
+
+	/* Lifts a pane off the neutral ground behind it. */
+	--cbwb-shadow-card: 0 1px 2px rgb(0 0 0 / 6%), 0 4px 12px rgb(0 0 0 / 4%);
+
+	/*
+	 * Lifts the mock checkout off the canvas: a sheet of paper, not a panel.
+	 * Carried a little heavier than the card shadow because it falls on a tinted
+	 * ground, where a shadow pitched for white all but disappears.
+	 */
+	--cbwb-shadow-sheet: 0 1px 3px rgb(0 0 0 / 12%), 0 10px 28px rgb(0 0 0 / 14%);
+	--cbwb-radius: var(--wpds-border-radius-lg, 8px);
+	--cbwb-radius-sm: var(--wpds-border-radius-sm, 4px);
+	--cbwb-gap: var(--wpds-dimension-gap-md, 12px);
+	--cbwb-gap-lg: var(--wpds-dimension-gap-lg, 16px);
+}
+
+.cbwb-app {
+
+	@include cbwb-tokens;
+	max-width: 1600px;
+	color: var(--cbwb-text);
+	font-size: 13px;
+	line-height: 1.5;
+
+	*:focus-visible {
+		outline: 2px solid var(--wpds-color-stroke-focus, #3858e9);
+		outline-offset: 1px;
+	}
+
+	/*
+	 * From two panes up the app is a full-height application screen: it fills
+	 * the window exactly once, and the panes inside it do the scrolling. The
+	 * page keeps whatever scroll the admin menu needs and no more.
+	 */
+	@media (min-width: $cbwb-breakpoint-two) {
+		display: flex;
+		flex-direction: column;
+		height: calc(100vh - #{$cbwb-admin-bar} - #{$cbwb-wrap-top});
+	}
+}
+
+/* The screen sits on the neutral ground; the panes are the white surfaces. */
+body.woocommerce_page_cbwb-fieldwright-checkout-fields {
+	background: var(--wpds-color-background-surface-neutral-weak, #f6f7f7);
+
+	/*
+	 * The room wp-admin leaves for its footer is the only thing left that would
+	 * scroll the page behind a screen that already fits the window.
+	 */
+	@media (min-width: $cbwb-breakpoint-two) {
+
+		#wpbody-content {
+			padding-bottom: 0;
+		}
+
+		#wpfooter {
+			display: none;
+		}
+	}
+}
+
+.cbwb-visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/*
+ * A button that goes somewhere on this screen, drawn as the link it behaves
+ * like. Used where the destination is another tab of the builder rather than
+ * another page: an anchor would need an address, and the tab strip has none.
+ */
+.cbwb-link-button {
+	appearance: none;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--wp-admin-theme-color, #2271b1);
+	font: inherit;
+	text-align: inherit;
+	text-decoration: underline;
+	cursor: pointer;
+
+	&:hover,
+	&:focus {
+		color: var(--wp-admin-theme-color-darker-20, #135e96);
+	}
+}
+
+/* ---------------------------------------------------------------- Header. */
+
+.cbwb-header {
+	position: sticky;
+	top: $cbwb-admin-bar;
+	z-index: 20;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: var(--cbwb-gap-lg);
+	padding: 16px 0 var(--cbwb-gap);
+	background: var(--cbwb-surface-neutral);
+
+	&__title {
+		margin: 0;
+		padding: 0;
+		font-size: 20px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	// The titles take whatever the actions leave, so the one sentence under the
+	// heading stays on one line wherever the screen is wide enough for it.
+	&__titles {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	&__subtitle {
+		margin: 4px 0 0;
+		color: var(--cbwb-text-muted);
+		font-size: 13px;
+	}
+
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	/* The admin bar grows, then stops being fixed at all. */
+	@media (max-width: 782px) {
+		top: 46px;
+	}
+
+	@media (max-width: 600px) {
+		position: static;
+	}
+}
+
+.cbwb-tabs {
+	display: flex;
+	gap: 4px;
+	border-bottom: 1px solid var(--cbwb-stroke);
+
+	&__tab {
+		appearance: none;
+		background: none;
+		border: 0;
+		border-bottom: 2px solid transparent;
+		margin-bottom: -1px;
+		padding: 10px 12px;
+		color: var(--cbwb-text-muted);
+		font-size: 13px;
+		font-weight: 500;
+		cursor: pointer;
+
+		&:hover {
+			color: var(--cbwb-text);
+		}
+
+		&[aria-selected="true"] {
+			border-bottom-color: var(--cbwb-stroke-accent);
+			color: var(--cbwb-text);
+		}
+	}
+}
+
+.cbwb-app__panel {
+	padding-top: var(--cbwb-gap-lg);
+
+	@media (min-width: $cbwb-breakpoint-two) {
+		display: flex;
+		flex-direction: column;
+		flex: 1 1 auto;
+		min-height: 0;
+		padding-bottom: var(--cbwb-gap-lg);
+	}
+}
+
+.cbwb-notices {
+	margin-bottom: var(--cbwb-gap-lg);
+
+	.components-notice {
+		margin: 0 0 8px;
+	}
+}
+
+/* ---------------------------------------------------------------- Layout. */
+
+/*
+ * Three panes: the Fields outline, the settings for whatever it has selected,
+ * and the checkout preview as the reference on the right — so a field's
+ * settings sit next to the row being edited. Below 1280px the settings and the
+ * preview take turns in the second column; below 1024px all three take turns
+ * in the only column there is.
+ */
+.cbwb-builder {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--cbwb-gap-lg);
+	align-content: start;
+
+	&__switch.cbwb-segmented {
+		margin: 0;
+		max-width: 420px;
+	}
+
+	@media (min-width: $cbwb-breakpoint-two) {
+		flex: 1 1 auto;
+		min-height: 0;
+		grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
+		grid-template-rows: auto minmax(0, 1fr);
+
+		/* The switcher heads the column it chooses between, not the screen. */
+		> .cbwb-builder__switch {
+			grid-column: 2;
+			grid-row: 1;
+		}
+
+		> .cbwb-pane {
+			grid-column: 2;
+			grid-row: 2;
+		}
+
+		/* The outline is always up, and takes the switcher's row with it. */
+		> .cbwb-pane--fields {
+			grid-column: 1;
+			grid-row: 1 / span 2;
+		}
+	}
+
+	/*
+	 * Every track can give ground, because at exactly 1280px the WordPress
+	 * admin menu has already taken 160px and three panes at their nominal
+	 * 280 / 440 / 400+ would push the whole page sideways. The preview keeps a
+	 * floor of its own and takes whatever is left over, so the inspector in the
+	 * middle is never the pane that pays for the others.
+	 */
+	@media (min-width: $cbwb-breakpoint-three) {
+		grid-template-columns:
+			minmax(240px, 280px)
+			minmax(380px, 440px)
+			minmax(400px, 1fr);
+		grid-template-rows: minmax(0, 1fr);
+
+		> .cbwb-pane--fields {
+			grid-column: 1;
+			grid-row: 1;
+		}
+
+		> .cbwb-pane--settings {
+			grid-column: 2;
+			grid-row: 1;
+		}
+
+		> .cbwb-pane--preview,
+		> .cbwb-pane--canvas {
+			grid-column: 3;
+			grid-row: 1;
+		}
+	}
+}
+
+/* ------------------------------------------------------------------ Pane. */
+
+.cbwb-pane {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	min-height: 0;
+	background: var(--cbwb-surface);
+	border: 1px solid var(--cbwb-stroke);
+	border-radius: var(--cbwb-radius);
+	box-shadow: var(--cbwb-shadow-card);
+	overflow: hidden;
+
+	&__header {
+		flex: 0 0 auto;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 8px;
+		padding: 10px var(--cbwb-gap);
+		border-bottom: 1px solid var(--cbwb-stroke);
+	}
+
+	&__title {
+		margin: 0;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	&__body {
+		flex: 1 1 auto;
+		min-height: 0;
+		overflow: auto;
+		overscroll-behavior: contain;
+		padding: var(--cbwb-gap);
+	}
+
+	/* Below two panes the page scrolls, so the panes must not cap themselves. */
+	@media (max-width: #{$cbwb-breakpoint-two - 1px}) {
+		max-height: none;
+	}
+}
+
+/* ---------------------------------------------------------------- Canvas. */
+
+/*
+ * The third pane is the page being built, not a third list of controls, so it
+ * is the one that stops being a white card: a tinted ground on which the mock
+ * checkout — or, before there is one, the grid of starter templates — sits as a
+ * white sheet. Controls on the left, the page on the right, told apart at a
+ * glance.
+ *
+ * The tint runs edge to edge, header included. A white header strip is what
+ * made the three panes read as one row of identical cards: whatever the body
+ * did, the eye met the same white top and the same hairline on all three. The
+ * outline goes a step darker for the same reason.
+ */
+.cbwb-pane--preview,
+.cbwb-pane--canvas {
+	background-color: var(--cbwb-surface-canvas);
+	border-color: var(--cbwb-stroke-canvas);
+}
+
+/*
+ * One step back towards white, so the row of controls still reads as a header
+ * band rather than as more ground, and its rule is the pane's own darker line.
+ */
+.cbwb-pane--preview > .cbwb-pane__header {
+	background: var(--cbwb-surface-canvas-header);
+	border-bottom-color: var(--cbwb-stroke-canvas);
+}
+
+/* ------------------------------------------------------ Fields outline. */
+
+.cbwb-list {
+
+	&__count {
+		margin: 0;
+		color: var(--cbwb-text-muted);
+		font-size: 12px;
+	}
+}
+
+.cbwb-pane--fields .cbwb-pane__body {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cbwb-gap-lg);
+}
+
+.cbwb-group {
+
+	&__header {
+		display: flex;
+		align-items: center;
+		gap: 0;
+		margin-bottom: 6px;
+		padding-inline-start: 4px;
+	}
+
+	/* An eyebrow, not a heading band: the pane is narrow and the rows matter. */
+	&__title {
+		margin: 0;
+		color: var(--cbwb-text-muted);
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	&__info.components-button.has-icon {
+		min-width: 24px;
+		width: 24px;
+		height: 24px;
+		padding: 0;
+		color: var(--cbwb-text-muted);
+
+		svg {
+			width: 16px;
+			height: 16px;
+		}
+	}
+
+	&__list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+}
+
+/* The way into a group, and the twin of the one the preview offers. */
+.cbwb-add-field.components-button {
+	justify-content: center;
+	width: 100%;
+	height: 36px;
+	margin-top: 6px;
+	border: 1px dashed var(--cbwb-stroke);
+	border-radius: var(--cbwb-radius-sm);
+	background: transparent;
+	color: var(--cbwb-text-muted);
+	font-size: 12px;
+
+	&:hover:not(:disabled, [aria-disabled="true"]) {
+		border-color: var(--cbwb-stroke-accent);
+		background: var(--cbwb-surface-selected);
+		color: var(--cbwb-text-accent);
+	}
+
+	&[aria-disabled="true"] {
+		opacity: 0.6;
+	}
+}
+
+.cbwb-badge {
+	display: inline-block;
+	padding: 0 6px;
+	border-radius: 999px;
+	background: var(--cbwb-surface-neutral);
+	color: var(--cbwb-text-muted);
+	font-size: 11px;
+	line-height: 17px;
+	white-space: nowrap;
+
+	&--error {
+		background: var(--wpds-color-background-surface-error-weak, #fcf0f1);
+		color: var(--wpds-color-foreground-content-error, #cc1818);
+	}
+
+	/* Decorative twin of `aria-current` on the selected row. */
+	&--editing {
+		background: var(--cbwb-surface-selected-strong);
+		color: var(--cbwb-text-accent);
+		font-size: 10px;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+	}
+}
+
+/*
+ * A status the row has no width to spell out; the word is there, hidden.
+ *
+ * The glyph is what a merchant reads, so it gets an 18px box — the size a
+ * `@wordpress/icons` icon needs before its thinner strokes go grey — and then
+ * gives most of that box back with a negative margin. Icons carry several
+ * pixels of their own padding inside the viewBox, so what the eye measures is
+ * the ink, not the box: this costs the label exactly the 12px per status the
+ * 8px dots cost it, and still leaves clear space between one glyph and the
+ * next.
+ */
+.cbwb-indicator {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	margin-inline: -5px;
+	color: var(--cbwb-text-muted);
+
+	&__glyph {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 18px;
+
+		/* A symbol like CHF is wider than a box; anything longer is not one. */
+		max-width: 32px;
+		height: 18px;
+		overflow: hidden;
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1;
+
+		/*
+		 * An icon arrives as a bare 24px `<SVG>` from `@wordpress/icons`, so
+		 * this is the only handle there is on its size. The file's other `svg`
+		 * rule out-specifies wp-components' own on a `.components-button`, which
+		 * nothing in here is inside of — the two never meet.
+		 */
+		/* stylelint-disable-next-line no-descending-specificity */
+		svg {
+			width: 18px;
+			height: 18px;
+			fill: currentcolor;
+		}
+	}
+
+	/* What an indicator with nothing to draw gets: the dot these all were. */
+	&__dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: currentcolor;
+	}
+
+	&--required,
+	&--brand {
+		color: var(--cbwb-text-accent);
+	}
+
+	/*
+	 * The error foreground, the one the error badge uses: a stroke colour drawn
+	 * at glyph weight comes out pale.
+	 */
+	&--error {
+		color: var(--wpds-color-foreground-content-error, #cc1818);
+	}
+
+	/*
+	 * Tones an add-on's row indicators can ask for, plus the one the
+	 * WooCommerce mark wears. Both are a step darker than muted body text: an
+	 * icon's strokes are thin where a word is solid, and #757575 leaves them
+	 * looking switched off.
+	 */
+	&--neutral,
+	&--core {
+		color: var(--cbwb-text-muted-canvas);
+	}
+
+	/* Text, not a fill: #dba617 is an amber dot, not a readable amber glyph. */
+	&--warning {
+		color: #8a6116;
+	}
+}
+
+/*
+ * The asterisk sits in the top third of its em box in every face, which is
+ * where a required marker belongs beside a label and nowhere near the middle of
+ * a row of glyphs. Transformed rather than padded: the box moves with the ink,
+ * so nothing is clipped and nothing beside it shifts.
+ */
+.cbwb-indicator--required .cbwb-indicator__glyph {
+	font-size: 16px;
+	transform: translateY(3px);
+}
+
+/*
+ * WooCommerce's own mark, in the indicator slot: its initial in the rounded box
+ * the logo is. Spelled out, "WooCommerce" was as wide as the label it sat
+ * beside and could only appear on hover; at a glyph's size it costs the label
+ * the same twelve pixels a Required asterisk does and is there at rest, which
+ * is when the question "whose field is this?" is actually asked.
+ *
+ * Outlined rather than filled: it shares the row with an asterisk and, where
+ * an add-on has something to say, a currency symbol and a funnel, and a solid
+ * block beside those would read as the loudest thing on a row it only labels.
+ *
+ * 14px inside an 18px box, so the two pixels of clear space every other glyph
+ * gets from its own viewBox are here too. At the box's full width its border
+ * ran into the Required asterisk beside it and the pair read as one mark.
+ */
+.cbwb-woo-mark {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 14px;
+	height: 14px;
+	border: 1px solid currentcolor;
+	border-radius: 4px;
+	font-size: 9px;
+	font-weight: 700;
+	line-height: 1;
+}
+
+/* Header-band chips in the editor: outlined, so they read on the tint. */
+.cbwb-chip {
+	display: inline-block;
+	max-width: 100%;
+	padding: 1px 8px;
+	border: 1px solid var(--cbwb-stroke);
+	border-radius: 999px;
+	background: var(--cbwb-surface);
+	color: var(--cbwb-text-muted);
+	font-size: 11px;
+	line-height: 18px;
+	overflow-wrap: anywhere;
+
+	/*
+	 * The one chip that is not describing the field but naming its owner, which
+	 * is the first thing to know about a pane with three settings in it.
+	 */
+	&--core {
+		border-color: var(--cbwb-stroke-accent-weak);
+		background: var(--cbwb-surface-selected);
+		color: var(--cbwb-text-accent);
+		font-weight: 600;
+	}
+}
+
+/*
+ * The line between what WooCommerce draws and what this plugin draws, in the
+ * placements the two share. A row cannot be dragged across it, so it says so.
+ */
+.cbwb-group__line {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 2px 0;
+	padding: 0;
+	color: var(--cbwb-text-muted);
+	font-size: 11px;
+	line-height: 1.4;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+
+	&::before,
+	&::after {
+		content: "";
+		flex: 1 1 auto;
+		border-top: 1px dashed var(--cbwb-stroke);
+	}
+
+	span {
+		flex: 0 0 auto;
+	}
+}
+
+.cbwb-field-row {
+
+	/*
+	 * The row measures itself, so the badge below gives way on the row's own
+	 * width — the same 280px outline is roomy at two panes and cramped at
+	 * three, and a window-width media query cannot tell those apart.
+	 */
+	container: cbwb-row / inline-size;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	min-height: 40px;
+	background: var(--cbwb-surface);
+	border: 1px solid var(--cbwb-stroke);
+	border-radius: var(--cbwb-radius-sm);
+	padding-inline: 2px 6px;
+
+	&__handle {
+		cursor: grab;
+		touch-action: none;
+		flex: 0 0 auto;
+		color: var(--cbwb-text-muted);
+	}
+
+	/* The row body, and the whole of it, is the select target. */
+	&__button {
+		appearance: none;
+		background: none;
+		border: 0;
+		flex: 1 1 auto;
+		align-self: stretch;
+		min-width: 0;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 0 2px;
+		text-align: start;
+		color: inherit;
+		font-size: 13px;
+		cursor: pointer;
+	}
+
+	&__label {
+		flex: 1 1 auto;
+		min-width: 0;
+		overflow: hidden;
+		font-weight: 500;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&__badges {
+		flex: 0 0 auto;
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+
+	&__toggle {
+		flex: 0 0 auto;
+	}
+
+	&__menu {
+		flex: 0 0 auto;
+	}
+
+	&:not(.is-selected):hover {
+		background: var(--cbwb-surface-neutral);
+	}
+
+	&.is-selected {
+		border-color: var(--cbwb-stroke-accent);
+		background: var(--cbwb-surface-selected);
+		box-shadow: inset 3px 0 0 var(--cbwb-stroke-accent);
+
+		.cbwb-field-row__label {
+			font-weight: 600;
+		}
+	}
+
+	&.is-dragging {
+		opacity: 0.6;
+	}
+
+	&.has-errors {
+		border-color: var(--cbwb-stroke-error);
+	}
+
+	&.is-disabled .cbwb-field-row__label {
+		color: var(--cbwb-text-muted);
+	}
+
+	/*
+	 * WooCommerce's own rows sit in the same list as the merchant's and are
+	 * sized exactly the same, because in the address form they *are* the same
+	 * list. Only the mark on the row says who owns it.
+	 *
+	 * The two spacers stand in for the handle and the menu on a row that has
+	 * neither: without them a fixed row would sit a control's width to the left
+	 * of the rows around it, and the outline would read as two lists.
+	 */
+	&__handle-space,
+	&__menu-space {
+		flex: 0 0 auto;
+		width: 24px;
+	}
+
+	/*
+	 * The apartment line is drawn *inside* the address line at checkout, so the
+	 * outline says the same thing: indented under its parent, with the rule down
+	 * the left edge tying the two together.
+	 */
+	&.is-child {
+		margin-inline-start: 16px;
+		border-top-left-radius: 0;
+		box-shadow: inset 3px 0 0 var(--cbwb-stroke);
+	}
+
+	/* A disabled switch is not hoverable in every browser; the wrapper is. */
+	&__lock {
+		display: inline-flex;
+		flex: 0 0 auto;
+	}
+
+	/*
+	 * A field the checkout will not show. Muted the way a switched-off field
+	 * is, because that is what it is from the shopper's side — but the row
+	 * itself still works, and the glyph beside the label says why.
+	 */
+	&.is-inactive .cbwb-field-row__label {
+		color: var(--cbwb-text-muted);
+	}
+}
+
+/*
+ * Below 300px the row cannot spell out a label and a type badge at once, and
+ * the label is what the merchant is reading — "Delivery instructions", not
+ * "Delivery instruct… Text". So the badge steps aside, clipped rather than
+ * removed: the row's accessible name is unchanged, its `title` still names the
+ * type, and hovering or focusing the row shows the badge again.
+ */
+@container cbwb-row (max-width: 299.98px) {
+
+	/*
+	 * The "Editing" chip steps aside with it, and does not come back on hover:
+	 * it is decorative — `aria-hidden`, a twin of the `aria-current` the row
+	 * already carries — and the tint, the accent border and the bar down the
+	 * edge have all said the same thing before a reader gets this far.
+	 */
+	.cbwb-field-row__badge,
+	.cbwb-badge--editing {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	/*
+	 * `:focus-visible`, not `:focus-within`: a mouse click leaves focus on the
+	 * row it selected, and a badge that stayed open because of it would truncate
+	 * the very label the merchant just clicked. Hover covers the mouse; this
+	 * covers the keyboard, which has no hover to fall back on.
+	 */
+	.cbwb-field-row:hover .cbwb-field-row__badge,
+	.cbwb-field-row__button:focus-visible .cbwb-field-row__badge {
+		position: static;
+		width: auto;
+		height: auto;
+		margin: 0;
+		padding: 0 6px;
+		overflow: visible;
+		clip-path: none;
+	}
+}
+
+/* --------------------------------------------------- Segmented control. */
+
+.cbwb-segmented {
+	border: 0;
+	margin: 0 0 var(--cbwb-gap-lg);
+	padding: 0;
+
+	&__legend {
+		padding: 0;
+		margin-bottom: 8px;
+		font-size: 11px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+	}
+
+	&__options {
+		display: flex;
+		gap: 2px;
+		padding: 2px;
+		background: var(--cbwb-surface-neutral);
+		border-radius: var(--cbwb-radius-sm);
+	}
+
+	&__option {
+		flex: 1 1 0;
+		position: relative;
+		display: block;
+	}
+
+	&__input {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		opacity: 0;
+		cursor: pointer;
+	}
+
+	&__label {
+		display: block;
+		padding: 7px 12px;
+		border-radius: var(--cbwb-radius-sm);
+		text-align: center;
+		font-size: 13px;
+		color: var(--cbwb-text-muted);
+	}
+
+	// An option drawn as an icon: the same box, square rather than wide, with
+	// the icon centred and the word kept for a screen reader.
+	&__option.has-icon {
+		flex: 0 0 auto;
+	}
+
+	&__option.has-icon &__label {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		// Border box, so a control that sets the chip's height outright (the
+		// preview's toolbar does) gets a chip of exactly that height.
+		box-sizing: border-box;
+		padding: 6px 10px;
+		line-height: 0;
+	}
+
+	&__option.has-icon &__label svg {
+		fill: currentcolor;
+	}
+
+	&__input:checked + &__label {
+		background: var(--cbwb-surface);
+		box-shadow: 0 0 0 1px var(--cbwb-stroke);
+		color: var(--cbwb-text);
+		font-weight: 500;
+	}
+
+	&__input:focus-visible + &__label {
+		outline: 2px solid var(--wpds-color-stroke-focus, #3858e9);
+		outline-offset: 1px;
+	}
+
+	&__help {
+		margin: 8px 0 0;
+		color: var(--cbwb-text-muted);
+		font-size: 12px;
+	}
+}
+
+/*
+ * The pane switcher's options name themselves — Fields, Preview, Settings — so
+ * its legend is there for a screen reader and nothing else.
+ */
+.cbwb-builder__switch .cbwb-segmented__legend {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* ------------------------------------------------------------ Type picker. */
+
+.cbwb-type-picker {
+	margin-bottom: var(--cbwb-gap-lg);
+
+	&__label {
+		display: block;
+		margin-bottom: 8px;
+		font-size: 11px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+	}
+
+	/* The toggle reads as a form control, not as a button to be pressed. */
+	&__toggle.components-button {
+		justify-content: flex-start;
+		gap: 8px;
+		width: 100%;
+		background: var(--cbwb-surface);
+		border: 1px solid var(--cbwb-stroke);
+		color: var(--cbwb-text);
+		font-weight: 400;
+		text-align: start;
+
+		&:hover:not(:disabled) {
+			background: var(--cbwb-surface);
+			border-color: var(--cbwb-stroke-accent);
+		}
+	}
+
+	&__value {
+		flex: 1 1 auto;
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&__chevron {
+		flex: 0 0 auto;
+		fill: var(--cbwb-text-muted);
+	}
+
+	&__help {
+		margin: 8px 0 0;
+		color: var(--cbwb-text-muted);
+		font-size: 12px;
+	}
+
+	&__dropdown {
+		display: block;
+	}
+
+	/*
+	 * The picker floats outside the app, so it carries the tokens itself, and
+	 * it scrolls in exactly one place. `Popover`'s own resizing caps this box
+	 * to the room it has and scrolls it — an inline style, so the height below
+	 * is only the fallback for when that has not run. A second scroller on the
+	 * panel inside would strand whatever fell between the two heights, which is
+	 * what put the last two groups out of reach.
+	 */
+	&__popover {
+
+		@include cbwb-tokens;
+
+		.components-popover__content {
+			box-sizing: border-box;
+
+			/*
+			 * The width belongs to the box that scrolls: a scrollbar drawn
+			 * inside it then narrows the panel instead of pushing it sideways
+			 * into a second, horizontal scrollbar.
+			 */
+			width: min(460px, calc(100vw - 48px));
+			max-height: calc(100vh - 96px);
+			overflow-y: auto;
+			overscroll-behavior: contain;
+
+			/* The panel supplies it, so a sticky heading can reach the edges. */
+			padding: 0;
+		}
+	}
+
+	/* Two columns of options, one column on a narrow screen. */
+	&__panel {
+		box-sizing: border-box;
+		width: 100%;
+		padding: var(--cbwb-gap);
+	}
+
+	&__group + &__group {
+		margin-top: var(--cbwb-gap);
+		padding-top: var(--cbwb-gap);
+		border-top: 1px solid var(--cbwb-stroke);
+	}
+
+	/* Stays put while its own options scroll under it. */
+	&__group-title {
+		position: sticky;
+		top: 0;
+		z-index: 1;
+		margin: 0 calc(var(--cbwb-gap) * -1) 8px;
+		padding: 4px var(--cbwb-gap);
+		background: var(--cbwb-surface);
+		color: var(--cbwb-text-muted);
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	&__grid {
+		display: grid;
+		gap: 4px;
+		grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+	}
+
+	/*
+	 * The one line at the foot of the grid. Under everything, muted, and the
+	 * size of a footnote: a merchant who has found what they came for never has
+	 * to read it.
+	 */
+	&__more {
+		margin: var(--cbwb-gap) 0 0;
+		padding-top: 8px;
+		border-top: 1px solid var(--cbwb-stroke);
+		color: var(--cbwb-text-muted);
+		font-size: 12px;
+		line-height: 1.4;
+	}
+}
+
+.cbwb-type-option {
+	appearance: none;
+	display: grid;
+	grid-template-columns: 20px minmax(0, 1fr);
+	gap: 2px 8px;
+	width: 100%;
+	padding: 8px;
+	border: 1px solid transparent;
+	border-radius: var(--cbwb-radius-sm);
+	background: none;
+	color: var(--cbwb-text);
+	text-align: start;
+	cursor: pointer;
+
+	&__icon {
+		grid-row: 1 / span 2;
+		fill: var(--cbwb-text-muted);
+	}
+
+	&__name {
+		font-size: 13px;
+		font-weight: 500;
+	}
+
+	&__description {
+		color: var(--cbwb-text-muted);
+		font-size: 12px;
+		line-height: 1.4;
+	}
+
+	&:hover {
+		background: var(--cbwb-surface-neutral);
+	}
+
+	/* The app's own focus ring, which does not reach a floating picker. */
+	&:focus-visible {
+		outline: 2px solid var(--wpds-color-stroke-focus, #3858e9);
+		outline-offset: 1px;
+	}
+
+	&.is-current {
+		border-color: var(--cbwb-stroke-accent-weak);
+		background: var(--cbwb-surface-selected);
+
+		.cbwb-type-option__icon {
+			fill: var(--cbwb-text-accent);
+		}
+
+		.cbwb-type-option__name {
+			color: var(--cbwb-text-accent);
+			font-weight: 600;
+		}
+	}
+
+}
+
+/* --------------------------------------------------------- Options list. */
+
+.cbwb-options {
+
+	&__list {
+		margin: 0 0 var(--cbwb-gap);
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: var(--cbwb-gap);
+	}
+
+	&__row {
+		display: grid;
+		grid-template-columns: 1fr 1fr auto;
+		gap: 8px;
+		align-items: end;
+	}
+
+	&__actions {
+		display: flex;
+		gap: 2px;
+		padding-bottom: 2px;
+	}
+}
+
+/* The prefilled answer of a checkbox group: one tick box per option. */
+.cbwb-defaults {
+	border: 0;
+	margin: 0;
+	padding: 0;
+
+	&__legend {
+		padding: 0;
+		margin-bottom: 8px;
+		font-size: 11px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+	}
+
+	.components-base-control {
+		margin-bottom: 4px;
+	}
+}
+
+/* ------------------------------------------------------------ Field key. */
+
+/*
+ * The row is bottom aligned, so the key control must not add the editor's own
+ * bottom margin — that would push the copy button below the input.
+ */
+.cbwb-editor .cbwb-key__input.components-base-control {
+	margin-bottom: 0;
+}
+
+.cbwb-key {
+	margin-bottom: var(--cbwb-gap-lg);
+
+	&__copied {
+		color: var(--cbwb-text-muted);
+		font-size: 12px;
+	}
+
+	&__help {
+		margin: 8px 0 0;
+		color: var(--cbwb-text-muted);
+		font-size: 12px;
+
+		&.is-error {
+			color: var(--wpds-color-foreground-content-error, #cc1818);
+		}
+	}
+}
+
+.cbwb-field-error {
+	margin: 4px 0 0;
+	color: var(--wpds-color-foreground-content-error, #cc1818);
+	font-size: 12px;
+}
+
+/* A field named in the save notice, drawn as the link it is. */
+.cbwb-problem-field.components-button.is-link {
+	height: auto;
+	padding: 0;
+	font-size: inherit;
+	line-height: inherit;
+	text-decoration: underline;
+}
+
+/*
+ * A control whose value the validator rejected.
+ *
+ * The message itself goes in the control's own `help` slot, so it stays wired
+ * to the input by `aria-describedby` — but a message that is the same grey as
+ * the hint it replaces reads as a hint. The red says which of the two it is,
+ * which is the only signal a merchant gets: the page-level notice says "fix the
+ * highlighted fields", and this is the highlight it means.
+ */
+.cbwb-control--error {
+
+	.components-text-control__input,
+	.components-select-control__input {
+		border-color: var(--cbwb-stroke-error);
+	}
+
+	.components-base-control__help {
+		color: var(--wpds-color-foreground-content-error, #cc1818);
+	}
+}
+
+/* ---------------------------------------------------------------- Editor. */
+
+/*
+ * The settings pane is the card now, so the inspector inside it is flat: a
+ * tinted band at the top names the field being edited, then divider-separated
+ * sections group the settings by the question they answer.
+ */
+.cbwb-pane--settings .cbwb-pane__body {
+	padding: 0;
+}
+
+.cbwb-editor {
+
+	/*
+	 * Sticky in the pane's scroller: the field stays named as it scrolls, and
+	 * so does the list of what is wrong with it, which is the point of the
+	 * list: a merchant sent here from the save notice lands wherever the
+	 * pane last scrolled to.
+	 */
+	&__header {
+		position: sticky;
+		top: 0;
+		z-index: 1;
+		background: var(--cbwb-surface-neutral);
+		border-bottom: 1px solid var(--cbwb-stroke);
+	}
+
+	&__band {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: var(--cbwb-gap);
+		padding: var(--cbwb-gap-lg);
+	}
+
+	/* min-width lets a long label wrap instead of shoving the close button out. */
+	&__identity {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	/*
+	 * Everything wrong with the field, under the band and above the settings,
+	 * so a message that lives inside a folded section is still read.
+	 */
+	&__problems {
+		margin: 0;
+		padding: 12px var(--cbwb-gap-lg);
+		border-top: 1px solid var(--cbwb-stroke-error);
+		background: var(--wpds-color-background-surface-error-weak, #fcf0f1);
+		color: var(--wpds-color-foreground-content-error, #cc1818);
+		font-size: 13px;
+
+		ul {
+			margin: 4px 0 0;
+			padding-left: 18px;
+			list-style: disc;
+		}
+
+		li {
+			margin: 2px 0;
+		}
+	}
+
+	&__problems-title {
+		margin: 0;
+		font-weight: 600;
+	}
+
+	&__eyebrow {
+		margin: 0;
+		color: var(--cbwb-text-muted);
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	&__title {
+		margin: 2px 0 0;
+		padding: 0;
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 1.3;
+		overflow-wrap: anywhere;
+	}
+
+	&__chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
+		margin-top: 8px;
+	}
+
+	&__close {
+		flex: 0 0 auto;
+	}
+
+	&__section {
+		padding: var(--cbwb-gap-lg);
+		border-top: 1px solid var(--cbwb-stroke);
+
+		/* The header band already draws the line above the first section. */
+		&:first-of-type {
+			border-top: 0;
+		}
+
+		/*
+		 * A section with no heading — an add-on's one line about where its
+		 * settings went. A rule above it would cut it off from the section it
+		 * is a footnote to, so it keeps the gutter and loses the rule.
+		 */
+		&.is-bare {
+			padding-top: 0;
+			border-top: 0;
+		}
+	}
+
+	&__section-title {
+		margin: 0;
+		font-size: 13px;
+		font-weight: 600;
+	}
+
+	&__section-description {
+		margin: 2px 0 var(--cbwb-gap);
+		color: var(--cbwb-text-muted);
+	}
+
+	&__note {
+		margin: 0 0 var(--cbwb-gap-lg);
+		color: var(--cbwb-text-muted);
+
+		/* A note the link under it belongs to, rather than a paragraph of its own. */
+		&.is-tight {
+			margin-bottom: 4px;
+		}
+
+		/*
+		 * A consequence the merchant will not see until a customer hits it —
+		 * a gateway that still wants the name they just made optional. Amber
+		 * text on a tinted band rather than a full `Notice`, which at this size
+		 * would shout louder than the setting it is about.
+		 */
+		&.is-warning {
+			padding: 8px 12px;
+			border-inline-start: 3px solid #dba617;
+			border-radius: var(--cbwb-radius-sm);
+			background: #fcf9e8;
+			color: #8a6116;
+		}
+	}
+
+	/*
+	 * A setting WooCommerce keeps for itself. The switch beside this is already
+	 * grey — a disabled `FormToggle` is painted that way in the settings pane
+	 * exactly as it is in the outline — but wp-components leaves the label at
+	 * full strength, and a black label beside a grey switch reads as a control
+	 * that is merely off. This is the treatment the outline gives a disabled
+	 * row's label, with a padlock in front of it so the grey says "locked"
+	 * rather than "unchecked".
+	 */
+	&__locked-label {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		color: var(--cbwb-text-muted);
+
+		/*
+		 * The padlock arrives as a bare 24px `<SVG>` from `@wordpress/icons`,
+		 * so this is the only handle there is on its size. The rule stylelint
+		 * compares it against is scoped to an icon *button*, which a control's
+		 * label never is — the two never meet.
+		 */
+		/* stylelint-disable-next-line no-descending-specificity */
+		svg {
+			flex: 0 0 auto;
+			width: 16px;
+			height: 16px;
+			fill: currentcolor;
+		}
+	}
+
+	/* Two or three small controls that belong together — a min and a max. */
+	&__row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-bottom: var(--cbwb-gap-lg);
+
+		.components-base-control {
+			flex: 1 1 120px;
+			min-width: 0;
+			margin-bottom: 0;
+		}
+	}
+
+	&__advanced.components-panel {
+		border: 0;
+	}
+
+	.components-panel__body {
+		border-left: 0;
+		border-right: 0;
+		border-bottom: 0;
+		padding-left: var(--cbwb-gap-lg);
+		padding-right: var(--cbwb-gap-lg);
+	}
+
+	.components-base-control,
+	.cbwb-options,
+	.cbwb-defaults {
+		margin-bottom: var(--cbwb-gap-lg);
+	}
+
+	.cbwb-editor__section-body > *:last-child,
+	.components-panel__body > *:last-child {
+		margin-bottom: 0;
+	}
+}
+
+/* ------------------------------------------- Extension-section primitives.
+ *
+ * Free ships no UI that uses these. They are the shared vocabulary an add-on
+ * bundle builds its editor sections from, so a second stylesheet (and a second
+ * enqueue) is not needed for a section that already lives inside this card.
+ */
+
+.cbwb-stack {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cbwb-gap);
+}
+
+/* A settings row that reads as one unit: controls, then the way out of it. */
+.cbwb-rule {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 8px;
+
+	/* Room on the right for the remove button, which is pinned to the corner. */
+	padding: var(--cbwb-gap) calc(var(--cbwb-gap) + 28px) var(--cbwb-gap) var(--cbwb-gap);
+	border: 1px solid var(--cbwb-stroke);
+	border-radius: var(--cbwb-radius-sm);
+	background: var(--cbwb-surface-neutral);
+
+	.components-base-control {
+		flex: 1 1 160px;
+		min-width: 0;
+		margin-bottom: 0;
+	}
+
+	&__body {
+		flex: 1 1 100%;
+		min-width: 0;
+	}
+
+	/*
+	 * In the flow the button is just another flex item, so it wraps wherever
+	 * the two dropdowns leave it — under the subject on one rule, beside the
+	 * amount box on the next, looking each time like it belongs to whatever it
+	 * landed next to. Pinned to the card's corner it means one thing: this
+	 * rule. Focus order is unchanged.
+	 */
+	&__remove {
+		position: absolute;
+		top: 6px;
+		right: 6px;
+		flex: 0 0 auto;
+	}
+}
+
+.cbwb-rules {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+/* The chosen ids of a search-backed control. */
+.cbwb-tokens {
+	margin: 8px 0 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+
+	&__item {
+		display: inline-flex;
+		align-items: center;
+		gap: 2px;
+		padding: 1px 2px 1px 8px;
+		border: 1px solid var(--cbwb-stroke);
+		border-radius: 999px;
+		background: var(--cbwb-surface);
+		font-size: 11px;
+		line-height: 18px;
+	}
+}
+
+/* Results of a live search, and long checkbox lists. */
+.cbwb-choices {
+	margin: 8px 0 0;
+	padding: 4px;
+	max-height: 180px;
+	overflow-y: auto;
+	border: 1px solid var(--cbwb-stroke);
+	border-radius: var(--cbwb-radius-sm);
+	background: var(--cbwb-surface);
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+
+	&__empty {
+		margin: 0;
+		padding: 4px;
+		color: var(--cbwb-text-muted);
+	}
+}
+
+/* Plain-English restatement of what the settings above add up to. */
+.cbwb-summary {
+	margin: 0;
+	padding: 8px var(--cbwb-gap);
+	border-radius: var(--cbwb-radius-sm);
+	background: var(--cbwb-surface-selected);
+	color: var(--cbwb-text-accent);
+}
+
+/* ------------------------------------------------------------ Templates. */
+
+.cbwb-pane--canvas .cbwb-pane__body {
+	padding: var(--cbwb-gap-lg);
+}
+
+.cbwb-empty.components-card {
+	border: 0;
+	box-shadow: none;
+	background: transparent;
+
+	.components-card__header,
+	.components-card__body {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.cbwb-empty {
+
+	/* The heading and the one button that is always the way out, side by side. */
+	&__header.components-card__header {
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--cbwb-gap);
+	}
+
+	&__title {
+		margin: 0;
+		font-size: 15px;
+		font-weight: 600;
+	}
+
+	/*
+	 * These two lines are printed straight onto the canvas, and the muted grey
+	 * is a colour picked against white: it only just clears AA there (#707070
+	 * from the design system, #757575 from the fallback, at 4.95:1 and 4.61:1),
+	 * and on a tint this deep both drop well under 4.5:1. The canvas grey clears
+	 * it again at 5.8:1. The template cards below are white, so the rest of the
+	 * empty state keeps the muted grey the whole app uses.
+	 */
+	&__subtitle {
+		margin: 2px 0 0;
+		color: var(--cbwb-text-muted-canvas);
+	}
+
+	&__lead {
+		margin: 0 0 8px;
+		color: var(--cbwb-text-muted-canvas);
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	/*
+	 * Ten cards in a column a third of the builder wide: narrow enough to keep
+	 * two of them abreast wherever the canvas is, and short enough that the set
+	 * ends above the fold.
+	 */
+	&__grid {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: 8px;
+		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+	}
+}
+
+.cbwb-template {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2px;
+	padding: var(--cbwb-gap);
+	border: 1px solid var(--cbwb-stroke);
+	border-radius: var(--cbwb-radius);
+	background: var(--cbwb-surface);
+
+	&__label {
+		margin: 0;
+		font-size: 13px;
+		font-weight: 600;
+	}
+
+	/* One line: what the card is for is its name, not its subtitle. */
+	&__meta {
+		margin: 0 0 6px;
+		max-width: 100%;
+		overflow: hidden;
+		color: var(--cbwb-text-muted);
+		font-size: 12px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+}
+
+/* ------------------------------------------------------------- Settings. */
+
+/*
+ * One card per panel, stacked. The gap does the whole job: it sits between two
+ * cards, between the last built-in panel and the Save button under it, and
+ * between that button and whatever an add-on put below — one rhythm, so nothing
+ * on the tab reads as though it belongs to the thing it happens to sit next to.
+ *
+ * The tail is padding rather than a margin on the last card, so it holds
+ * however many cards the tab ends up with and whichever one is last.
+ */
+.cbwb-settings {
+	// A control that only exists because of the choice above it: set apart from
+	// that choice's help text, so the two read as a choice and its follow up.
+	&__follow-up {
+		margin-top: 16px;
+	}
+
+	display: flex;
+	flex-direction: column;
+	gap: $cbwb-panel-gap;
+	max-width: 720px;
+	padding-bottom: $cbwb-panel-tail;
+
+	&__title {
+		margin: 0;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	&__description {
+		margin: 0 0 var(--cbwb-gap);
+		color: var(--cbwb-text-muted);
+	}
+
+}
+
+/* -------------------------------------------------------- Compatibility. */
+
+/*
+ * A report, not a form: one column of cards the merchant reads top to bottom.
+ * The same 720px measure and the same rhythm as the Settings tab, so the two
+ * read as one screen.
+ */
+.cbwb-compat {
+	display: flex;
+	flex-direction: column;
+	gap: $cbwb-panel-gap;
+	max-width: 720px;
+	padding-bottom: $cbwb-panel-tail;
+
+	&__title {
+		margin: 0;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	&__loading {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin: 0;
+		color: var(--cbwb-text-muted);
+	}
+
+	&__link {
+		margin: var(--cbwb-gap) 0 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--cbwb-gap);
+	}
+
+	&__actions {
+		margin-top: var(--cbwb-gap-lg);
+		padding-top: var(--cbwb-gap);
+		border-top: 1px solid var(--cbwb-stroke);
+	}
+
+	&__note {
+		margin: 8px 0 0;
+		max-width: 68ch;
+		color: var(--cbwb-text-muted);
+	}
+
+	&__empty {
+		margin: 8px 0 0;
+		color: var(--cbwb-text-muted);
+	}
+
+	/* Four counts side by side, wrapping to two before they ever squash. */
+	&__stats {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: 8px;
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+	}
+
+	&__stat {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		padding: var(--cbwb-gap);
+		border: 1px solid var(--cbwb-stroke);
+		border-radius: var(--cbwb-radius-sm);
+		background: var(--cbwb-surface-neutral);
+	}
+
+	&__stat-value {
+		font-size: 22px;
+		font-weight: 600;
+		line-height: 1.2;
+	}
+
+	&__stat-label {
+		color: var(--cbwb-text-muted);
+		font-size: 12px;
+	}
+
+	&__group {
+		margin-top: var(--cbwb-gap-lg);
+		padding-top: var(--cbwb-gap-lg);
+		border-top: 1px solid var(--cbwb-stroke);
+	}
+
+	&__group-title {
+		margin: 0;
+		font-size: 13px;
+		font-weight: 600;
+	}
+
+	/* A long plugin name scrolls the table, never the page. */
+	&__scroller {
+		margin-top: var(--cbwb-gap);
+		overflow-x: auto;
+	}
+
+	&__table {
+		width: 100%;
+		border-collapse: collapse;
+		text-align: start;
+
+		th,
+		td {
+			padding: 6px 8px;
+			border-bottom: 1px solid var(--cbwb-stroke);
+			text-align: start;
+			vertical-align: top;
+		}
+
+		thead th {
+			color: var(--cbwb-text-muted);
+			font-size: 11px;
+			font-weight: 600;
+			letter-spacing: 0.04em;
+			text-transform: uppercase;
+			white-space: nowrap;
+		}
+
+		tbody th {
+			font-weight: 500;
+		}
+
+		tbody tr:last-child th,
+		tbody tr:last-child td {
+			border-bottom: 0;
+		}
+	}
+}
+
+/* ------------------------------------------------------------- Snackbar. */
+
+.cbwb-import-input {
+	display: none;
+}
+
+.cbwb-snackbar {
+	// Only the undo after a removal lives here now. It sits at the top right of
+	// the window, under the admin bar, where the eye is after a click in the
+	// builder, rather than at the bottom left of a wide screen.
+	position: fixed;
+	inset-inline-end: 20px;
+	inset-block-start: 52px;
+	z-index: 100000;
+}

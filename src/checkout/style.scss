@@ -1,0 +1,333 @@
+/**
+ * Fieldwright's storefront styles.
+ *
+ * Scoped entirely to `.cbwb-field` and the two content blocks, because
+ * everything else on the page belongs to WooCommerce or to the theme. The
+ * controls themselves wear core's own class names wherever there is one to
+ * wear, so they inherit the checkout's borders, focus rings and spacing rather
+ * than restating them here.
+ *
+ * ## What this file has to say out loud, and why
+ *
+ * Everything below is measured against WooCommerce 11.0.1's own controls on the
+ * same page: the text box is `.wc-block-components-text-input input`, the label
+ * and option rows are `.wc-block-components-checkbox` / `…-radio-control`, and
+ * the secondary line is `.wc-block-components-checkout-step__description`.
+ *
+ * Two things stop us simply inheriting them. Our label is a `<label>` or a
+ * `<legend>` and our help is a `<p>`, and a block theme sizes all three from
+ * its own body scale — Twenty Twenty-Five puts the checkout's body text at
+ * 21.76px, half as big again as any label WooCommerce draws — so the sizes have
+ * to be stated rather than left to cascade. And core's radio option is padded
+ * for the boxed shipping rows it usually draws (`16px 16px 16px 48px`), which
+ * strands the control when the box is not there.
+ *
+ * `--wp--preset--font-size--small` is the variable core itself reaches for; the
+ * 14px fallback is what it falls back to, so a theme that does not define the
+ * preset lands exactly where core does.
+ *
+ * The stylesheet is registered behind `wc-blocks-style-checkout` (see
+ * `Checkout\Assets`), so a rule here that restates one of core's wins the tie.
+ */
+
+.cbwb-field {
+
+	/* Core's own spacing between consecutive fields: `margin-top` of 12px on a
+	   text input, 16px on a checkbox. Fixed pixels, like core's, so a theme
+	   with large body text does not push our fields apart. */
+	margin-bottom: 16px;
+
+	/*
+	 * Two half fields sit side by side because the wrappers are inline blocks
+	 * in a container that is not ours to change. The 8px each gives up pays for
+	 * the 16px between them; the checkout's renderer emits the two wrappers as
+	 * adjacent siblings with no text node in between, so the gap has to be a
+	 * margin rather than inline whitespace.
+	 */
+	&--half {
+		display: inline-block;
+		width: calc(50% - 8px);
+		vertical-align: top;
+	}
+
+	&--half + &--half {
+		margin-left: 16px;
+	}
+
+	&__label {
+		display: block;
+
+		/* A `<legend>` carries 2px of horizontal padding of its own, which
+		   would set a group's label 2px left of every control under it, and
+		   Storefront tints it (`fieldset legend`) to look like a panel header. */
+		padding: 0;
+		margin: 0 0 8px;
+		background: none;
+		font-size: var(--wp--preset--font-size--small, 14px);
+		font-weight: 500;
+		line-height: 1.4;
+	}
+
+	&__group {
+		margin: 0;
+		padding: 0;
+		border: 0;
+
+		/* Storefront gives every `<fieldset>` a tinted panel, which would draw a
+		   box round an option list that is not meant to have one. */
+		background: none;
+		min-inline-size: 0;
+	}
+
+	/*
+	 * The two boxes: the date and time pickers, and the multi-line answer.
+	 *
+	 * Both are written as `.cbwb-field .cbwb-field__…` rather than the single
+	 * class they need on their own, because a class on its own is not enough to
+	 * hold them. Astra ships `.wp-block-woocommerce-checkout input { height:
+	 * auto }` and `input[type="date"] { background: … }`, which out-specify one
+	 * class and would leave a 29px-tall time picker beside a 52px date picker
+	 * in the theme's own colours. Two classes clear both, and clear the same
+	 * shape of rule in any other theme that reaches into the checkout.
+	 *
+	 * That extra weight is also why the focus states below are restated: our
+	 * base rule now outranks the `:focus` rules core would have applied.
+	 */
+
+	/* Core has no text input we can borrow the box from without also borrowing
+	   its floating label, which a picker has no room for — so the box is
+	   restated from `.wc-block-components-text-input input`. The vertical
+	   padding core uses there leaves room for that floating label; ours is
+	   above the box, so the value is centred in the same 50px instead. */
+	& &__input {
+		display: block;
+		box-sizing: border-box;
+		width: 100%;
+		height: 50px;
+		margin: 0;
+		padding: 0 12px;
+		border: 1px solid color-mix(in srgb, currentcolor 80%, transparent);
+		border-radius: 4px;
+		background-color: #fff;
+		color: #2b2d2f;
+		font-family: inherit;
+		font-size: 16px;
+		line-height: 25px;
+
+		&:focus {
+			border-width: 1.5px;
+		}
+	}
+
+	/*
+	 * A dropdown of the times an add-on offered. It wears the box above rather
+	 * than core's own `.wc-blocks-components-select__select`, which is cut for
+	 * the floating label and the chevron its container draws; the label here is
+	 * above the box, like every other field of ours. All that is left to say is
+	 * what a list with nothing open in it looks like.
+	 */
+	& &__select:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+
+	/* `.wc-block-components-textarea`, restated for the same reason. */
+	& &__textarea {
+		display: block;
+		box-sizing: border-box;
+		width: 100%;
+		margin: 0;
+		padding: 12px;
+		border: 1px solid color-mix(in srgb, #2b2d2f 80%, transparent);
+		border-radius: 4px;
+		background-color: #fff;
+		color: inherit;
+		font-family: inherit;
+		font-size: var(--wp--preset--font-size--small, 14px);
+		line-height: 1.4;
+		resize: vertical;
+
+		&:focus {
+			border-color: #2b2d2f;
+			box-shadow: inset 0 0 0 0.5px #2b2d2f;
+		}
+	}
+
+	/* A checkout on a dark background; core dresses its own controls from the
+	   same class. */
+	.has-dark-controls & &__input,
+	.has-dark-controls & &__textarea {
+		border-color: rgba(255, 255, 255, 0.4);
+		background-color: rgba(0, 0, 0, 0.1);
+		color: #fff;
+	}
+
+	&__options {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+
+		&--inline {
+			flex-flow: row wrap;
+			gap: 12px 24px;
+		}
+
+		/* Core's radio option is padded for a boxed row — the shipping rates
+		   and payment methods it is usually drawing — and positions the control
+		   inside that padding. A bare list of choices has no box to sit in, so
+		   the option is re-cut to the geometry of core's checkbox row instead:
+		   a 20px control, then 12px, then the label. */
+		.wc-block-components-radio-control__option {
+			padding: 0 0 0 32px;
+		}
+
+		.wc-block-components-radio-control__input {
+			top: 0;
+			left: 0;
+			transform: none;
+		}
+
+		/* The 16px core puts above a standalone checkbox is the gap above the
+		   whole group, not between two of its options. */
+		.wc-block-components-checkbox {
+			margin-top: 0;
+		}
+	}
+
+	&__help {
+		margin: 8px 0 0;
+
+		/* Core's own secondary line, `…-checkout-step__description`, with the
+		   muting that tells it apart from the label above it. */
+		font-size: var(--wp--preset--font-size--small, 14px);
+		line-height: 1.4;
+		opacity: 0.7;
+	}
+
+	&.has-error &__input,
+	&.has-error &__textarea {
+		border-color: #cc1818;
+	}
+}
+
+/*
+ * Content blocks. The heading is drawn by core's own `Title`, which already
+ * sizes it as a checkout step title and doubles its class to say so, and the
+ * merchant's chosen level is about the document outline rather than the size —
+ * core sizes every title it draws the same way. So there is nothing to add.
+ *
+ * A paragraph has no core component to borrow from, and the theme's body size
+ * is the wrong one: every line of prose WooCommerce writes on this page — the
+ * guest notice, the step descriptions, the terms line above the button — is at
+ * the small preset.
+ */
+.cbwb-paragraph {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--small, 14px);
+	line-height: 1.6;
+}
+
+/* ------------------------------------------- Marking the required fields.
+ *
+ * Only on a store that has asked for it: `Checkout\Assets` puts
+ * `cbwb-required-asterisk` on the checkout's `<body>` when the setting is on,
+ * and every rule that reaches WooCommerce's own controls is written under it.
+ * The class is set on the server rather than by the bundle, because the bundle
+ * is not loaded at all on a store whose only fields are WooCommerce's own, and
+ * those are exactly the fields these rules exist for.
+ *
+ * Nothing here draws "(optional)" or takes it away. That is settled before the
+ * page is built: `Fields\CoreFields` hands WooCommerce an `optionalLabel` equal
+ * to the label, `Fields\Registrar` does the same for the fields WooCommerce
+ * carries, and the checkout's own `required ? label : optionalLabel` then reads
+ * the same either way. All that is left for CSS is the mark itself.
+ *
+ * The mark is a `::after`, which is exactly what an assistive technology should
+ * not read: it is decoration on top of the input's own `required`, which is
+ * already announced. `--cbwb-required-mark-color` is there so a theme can
+ * repaint every one of them at once; the default is the red WooCommerce already
+ * paints a failed field in.
+ */
+
+@mixin cbwb-required-mark {
+	content: " *";
+	color: var(--cbwb-required-mark-color, #cc1818);
+}
+
+/*
+ * The fields Fieldwright draws itself carry a real element instead (see
+ * `Field.tsx`): those labels are ours to write, and an element is one less
+ * thing for a theme reaching into the checkout to paint over.
+ */
+.cbwb-required-mark {
+	margin-inline-start: 2px;
+	color: var(--cbwb-required-mark-color, #cc1818);
+}
+
+.cbwb-required-asterisk {
+
+	/*
+	 * A text box, and everything WooCommerce renders as one: its own contact
+	 * and address fields, the text, email, phone, number and web address fields
+	 * it carries for us, the apartment line, and a state whose country has no
+	 * state list. The input is written *before* its label, so the label is
+	 * reached from the input rather than the other way round.
+	 */
+	.wc-block-components-text-input input:required + label::after {
+
+		@include cbwb-required-mark;
+	}
+
+	/*
+	 * A tick box. The label's text is a `<span>` inside the `<label>`, after
+	 * the input and the tick itself.
+	 *
+	 * On one line, long as it is: a selector wrapped across lines puts its
+	 * combinator at the start of a line, and the house style keeps a space in
+	 * front of every one of them.
+	 */
+	.wc-block-components-checkbox input[type="checkbox"]:required ~ .wc-block-components-checkbox__label::after {
+
+		@include cbwb-required-mark;
+	}
+
+	/*
+	 * A multi-line box. WooCommerce draws exactly one, the order-note box, and
+	 * it has no label and can never be required — the tick above it is what
+	 * opens it. So the only textarea on the page that can carry a mark is one
+	 * of ours, which carries the element above rather than this.
+	 */
+}
+
+/*
+ * A dropdown: the country and state pickers, and the dropdowns WooCommerce
+ * carries for us. Its label comes first, and there is no `required` attribute
+ * anywhere to hang the rule on — WooCommerce's `Select` reads `required` and
+ * never passes it to the element. What does say it is the empty first option,
+ * which the same component disables exactly when the field is required.
+ *
+ * Written as a rule of its own rather than beside the two above, because a
+ * browser that does not understand `:has()` discards every selector in the list
+ * it appears in, and the text box and the tick box would go down with it.
+ *
+ * On one line for the same reason as the tick box above.
+ */
+.cbwb-required-asterisk .wc-blocks-components-select__container:has(> select > option[value=""][disabled]) > .wc-blocks-components-select__label::after {
+
+	@include cbwb-required-mark;
+}
+
+/*
+ * The line above the form that says what the asterisk means. Written into the
+ * rendered checkout by `Blocks\RichFields`, directly above the contact step,
+ * and only while the merchant has left its own switch on.
+ *
+ * Sized like every other line of prose WooCommerce writes on this page rather
+ * than like the theme's body text, which is the same reason `.cbwb-paragraph`
+ * above states a size at all.
+ */
+.cbwb-required-note {
+	margin: 0 0 16px;
+	font-size: var(--wp--preset--font-size--small, 14px);
+	line-height: 1.4;
+}

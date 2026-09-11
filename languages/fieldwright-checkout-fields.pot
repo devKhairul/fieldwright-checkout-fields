@@ -1,0 +1,1017 @@
+# Copyright (C) 2026 Methodical
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Fieldwright Checkout Fields for WooCommerce 1.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/fieldwright-checkout-fields\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-11T04:54:37+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: fieldwright-checkout-fields\n"
+
+#. Plugin Name of the plugin
+#: fieldwright-checkout-fields.php
+msgid "Fieldwright Checkout Fields for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: fieldwright-checkout-fields.php
+msgid "https://fieldwright.methodicalstudio.com/"
+msgstr ""
+
+#. Description of the plugin
+#: fieldwright-checkout-fields.php
+msgid "Add checkout fields and control WooCommerce's own fields on the Checkout block, with no code."
+msgstr ""
+
+#. Author of the plugin
+#: fieldwright-checkout-fields.php
+msgid "Methodical"
+msgstr ""
+
+#. Author URI of the plugin
+#: fieldwright-checkout-fields.php
+msgid "https://methodicalstudio.com"
+msgstr ""
+
+#: includes/Admin/Page.php:83
+#: includes/Admin/Page.php:84
+msgid "Fieldwright"
+msgstr ""
+
+#: includes/Admin/Page.php:206
+#: includes/Fields/Registrar.php:229
+#: includes/Fields/Templates.php:39
+msgid "Choose an option"
+msgstr ""
+
+#. translators: %s: field label.
+#: includes/Admin/Page.php:254
+#, php-format
+msgid "The format rule for “%s” caused a regular expression error at checkout; customers may be blocked from ordering until you change it."
+msgstr ""
+
+#. translators: %s: placement name, e.g. "Before the place order button".
+#: includes/Admin/Page.php:280
+#, php-format
+msgid "The “%s” position is not on your checkout page, so fields placed there were shown at the end of the checkout form instead."
+msgstr ""
+
+#: includes/Admin/Page.php:303
+msgid "Contact"
+msgstr ""
+
+#: includes/Admin/Page.php:304
+msgid "Shown at the top of checkout, next to the email address."
+msgstr ""
+
+#: includes/Admin/Page.php:305
+msgid "Saved to the customer's account."
+msgstr ""
+
+#: includes/Admin/Page.php:309
+msgid "Address"
+msgstr ""
+
+#: includes/Admin/Page.php:310
+msgid "Shown inside both the shipping and billing address forms."
+msgstr ""
+
+#: includes/Admin/Page.php:311
+msgid "Saved to the customer's address book."
+msgstr ""
+
+#: includes/Admin/Page.php:315
+msgid "Order information"
+msgstr ""
+
+#: includes/Admin/Page.php:316
+msgid "Shown in the Additional order information section, above the payment methods."
+msgstr ""
+
+#: includes/Admin/Page.php:317
+msgid "Saved on the order only."
+msgstr ""
+
+#: includes/Admin/Page.php:349
+msgid "Shipping address"
+msgstr ""
+
+#: includes/Admin/Page.php:350
+msgid "Shown only in the shipping address form, after WooCommerce's own fields. A required field here is only required when that form is shown."
+msgstr ""
+
+#: includes/Admin/Page.php:354
+msgid "Billing address"
+msgstr ""
+
+#: includes/Admin/Page.php:355
+msgid "Shown only in the billing address form, after WooCommerce's own fields. A required field here is only required when that form is shown."
+msgstr ""
+
+#: includes/Admin/Page.php:362
+msgid "After shipping options"
+msgstr ""
+
+#: includes/Admin/Page.php:363
+msgid "Below the list of shipping methods, where a question about the delivery belongs."
+msgstr ""
+
+#: includes/Admin/Page.php:367
+msgid "After payment options"
+msgstr ""
+
+#: includes/Admin/Page.php:368
+msgid "Below the payment methods, before the order notes."
+msgstr ""
+
+#: includes/Admin/Page.php:372
+msgid "Before the Place order button"
+msgstr ""
+
+#: includes/Admin/Page.php:373
+msgid "The last thing the customer reads before they pay."
+msgstr ""
+
+#: includes/Admin/Page.php:377
+msgid "Order summary"
+msgstr ""
+
+#: includes/Admin/Page.php:378
+msgid "Inside the summary panel beside the form, under the totals."
+msgstr ""
+
+#: includes/Admin/Page.php:403
+msgid "Text"
+msgstr ""
+
+#: includes/Admin/Page.php:404
+msgid "A single-line text box, with optional format and length rules."
+msgstr ""
+
+#: includes/Admin/Page.php:408
+#: includes/Fields/FormatPresets.php:55
+msgid "Email address"
+msgstr ""
+
+#: includes/Admin/Page.php:409
+msgid "A text box that only accepts an email address, with the right keyboard on a phone."
+msgstr ""
+
+#: includes/Admin/Page.php:413
+#: includes/Fields/FormatPresets.php:60
+msgid "Phone number"
+msgstr ""
+
+#: includes/Admin/Page.php:414
+msgid "A text box that only accepts a phone number, with the dial pad on a phone."
+msgstr ""
+
+#: includes/Admin/Page.php:418
+#: includes/Fields/FormatPresets.php:65
+msgid "Number"
+msgstr ""
+
+#: includes/Admin/Page.php:419
+msgid "A number, with an optional smallest and largest value."
+msgstr ""
+
+#: includes/Admin/Page.php:423
+#: includes/Fields/FormatPresets.php:70
+msgid "Web address"
+msgstr ""
+
+#: includes/Admin/Page.php:424
+msgid "A link, which has to start with http:// or https://."
+msgstr ""
+
+#: includes/Admin/Page.php:428
+msgid "Dropdown"
+msgstr ""
+
+#: includes/Admin/Page.php:429
+msgid "A list of options the customer picks one of."
+msgstr ""
+
+#: includes/Admin/Page.php:433
+msgid "Checkbox"
+msgstr ""
+
+#: includes/Admin/Page.php:434
+msgid "A single yes/no tick box, for consent and opt-ins."
+msgstr ""
+
+#: includes/Admin/Page.php:438
+msgid "Long text"
+msgstr ""
+
+#: includes/Admin/Page.php:439
+msgid "A multi-line box, for gift messages and delivery instructions."
+msgstr ""
+
+#: includes/Admin/Page.php:443
+msgid "Radio buttons"
+msgstr ""
+
+#: includes/Admin/Page.php:444
+msgid "The same choice as a dropdown, with every option visible at once."
+msgstr ""
+
+#: includes/Admin/Page.php:448
+msgid "Checkbox group"
+msgstr ""
+
+#: includes/Admin/Page.php:449
+msgid "A list the customer can tick more than one of."
+msgstr ""
+
+#: includes/Admin/Page.php:453
+msgid "Date"
+msgstr ""
+
+#: includes/Admin/Page.php:454
+msgid "A date picker, with an optional earliest and latest date."
+msgstr ""
+
+#: includes/Admin/Page.php:458
+msgid "Time"
+msgstr ""
+
+#: includes/Admin/Page.php:459
+msgid "A time picker, with an optional earliest and latest time."
+msgstr ""
+
+#: includes/Admin/Page.php:463
+msgid "Heading"
+msgstr ""
+
+#: includes/Admin/Page.php:464
+msgid "A title that breaks the checkout into sections. Nothing is asked or stored."
+msgstr ""
+
+#: includes/Admin/Page.php:468
+msgid "Paragraph"
+msgstr ""
+
+#: includes/Admin/Page.php:469
+msgid "A note to the customer. Nothing is asked or stored."
+msgstr ""
+
+#: includes/Admin/Page.php:506
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: includes/Admin/Page.php:510
+msgid "The admin app has not been built. Run \"npm run build\" in the plugin directory."
+msgstr ""
+
+#: includes/Blocks/RichFields.php:117
+msgid "Fieldwright field"
+msgstr ""
+
+#: includes/Blocks/RichFields.php:222
+msgid "Fields marked with an asterisk are required."
+msgstr ""
+
+#: includes/Checkout/Assets.php:501
+msgid "This field is required."
+msgstr ""
+
+#: includes/Checkout/Assets.php:502
+msgid "Choose one of the available options."
+msgstr ""
+
+#: includes/Checkout/Assets.php:503
+msgid "This value is too long."
+msgstr ""
+
+#: includes/Checkout/Assets.php:504
+msgid "Choose a value within the allowed range."
+msgstr ""
+
+#: includes/Checkout/Assets.php:505
+msgid "(optional)"
+msgstr ""
+
+#. translators: %s: field label.
+#: includes/Checkout/Assets.php:517
+#: includes/Fields/RichValues.php:194
+#, php-format
+msgid "Enter a date for %s in YYYY-MM-DD form."
+msgstr ""
+
+#. translators: %s: field label.
+#: includes/Checkout/Assets.php:519
+#: includes/Fields/RichValues.php:204
+#, php-format
+msgid "Enter a time for %s in HH:MM form."
+msgstr ""
+
+#. translators: %d: a number of years.
+#: includes/Checkout/Assets.php:521
+#, php-format
+msgid "You have to be at least %d years old."
+msgstr ""
+
+#: includes/Compatibility/DraftPage.php:85
+msgid "The preview page is already being created. Reload the page in a moment."
+msgstr ""
+
+#: includes/Compatibility/DraftPage.php:181
+msgid "Checkout (block preview)"
+msgstr ""
+
+#: includes/Compatibility/Scanner.php:419
+msgid "These plugins have told WooCommerce they work with the block checkout."
+msgstr ""
+
+#: includes/Compatibility/Scanner.php:420
+msgid "These plugins have told WooCommerce they do not work with the block checkout. Check with their developers before switching."
+msgstr ""
+
+#: includes/Compatibility/Scanner.php:421
+msgid "These plugins haven't said whether they support the block checkout. Test them on a draft page before switching."
+msgstr ""
+
+#: includes/Compatibility/Scanner.php:422
+msgid "These plugins don't mention WooCommerce, so WooCommerce can't classify them. They're usually unrelated to checkout, but test any that add checkout features."
+msgstr ""
+
+#: includes/Fields/CoreFields.php:810
+#: includes/Fields/FieldDefinition.php:2178
+msgid "Add-on settings must be an object."
+msgstr ""
+
+#: includes/Fields/CoreFields.php:817
+#: includes/Fields/FieldDefinition.php:2185
+msgid "Add-on settings could not be stored."
+msgstr ""
+
+#. translators: %d: maximum number of bytes.
+#: includes/Fields/CoreFields.php:827
+#: includes/Fields/FieldDefinition.php:2195
+#, php-format
+msgid "Add-on settings cannot be larger than %d bytes."
+msgstr ""
+
+#: includes/Fields/CoreFields.php:968
+msgid "Core field settings must be an object."
+msgstr ""
+
+#. translators: %s: field key.
+#: includes/Fields/CoreFields.php:985
+#, php-format
+msgid "\"%s\" is not one of WooCommerce's own checkout fields."
+msgstr ""
+
+#: includes/Fields/CoreFields.php:993
+msgid "Each core field must be an object."
+msgstr ""
+
+#: includes/Fields/CoreFields.php:1031
+msgid "The field order must be an object."
+msgstr ""
+
+#. translators: %s: property name.
+#: includes/Fields/CoreFields.php:1062
+#, php-format
+msgid "\"%s\" is not something you can change on a WooCommerce field."
+msgstr ""
+
+#. translators: 1: property name, 2: field key.
+#: includes/Fields/CoreFields.php:1075
+#, php-format
+msgid "WooCommerce does not allow \"%1$s\" to be changed on its \"%2$s\" field."
+msgstr ""
+
+#: includes/Fields/CoreFields.php:1085
+#: includes/Fields/FieldDefinition.php:1318
+msgid "The label must be text."
+msgstr ""
+
+#. translators: %d: maximum number of characters.
+#: includes/Fields/CoreFields.php:1094
+#: includes/Fields/FieldDefinition.php:1335
+#, php-format
+msgid "Labels cannot be longer than %d characters."
+msgstr ""
+
+#: includes/Fields/CoreFields.php:1106
+msgid "This setting must be true or false."
+msgstr ""
+
+#. translators: %s: field label.
+#: includes/Fields/CoreFields.php:1190
+#, php-format
+msgid "%s (optional)"
+msgstr ""
+
+#: includes/Fields/FieldCollection.php:54
+msgid "Fields must be a list."
+msgstr ""
+
+#. translators: %d: maximum number of fields.
+#: includes/Fields/FieldCollection.php:64
+#, php-format
+msgid "You can add up to %d checkout fields."
+msgstr ""
+
+#: includes/Fields/FieldCollection.php:78
+#: includes/Rest/ConfigController.php:280
+msgid "Each field must be an object."
+msgstr ""
+
+#. translators: %s: field key.
+#: includes/Fields/FieldCollection.php:93
+#, php-format
+msgid "The field key \"%s\" is already used by another field."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:557
+msgid "The maximum must be greater than the minimum."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:571
+msgid "The latest date must not come before the earliest one."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:581
+msgid "The latest time must not come before the earliest one."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:963
+#: includes/Fields/FormatPresets.php:82
+msgid "Please match the requested format."
+msgstr ""
+
+#. translators: %d: maximum number of characters.
+#: includes/Fields/FieldDefinition.php:1218
+#, php-format
+msgid "A field type is up to %d characters of lowercase letters, numbers and underscores, starting with a letter."
+msgstr ""
+
+#. translators: %s: comma-separated list of supported locations.
+#: includes/Fields/FieldDefinition.php:1246
+#, php-format
+msgid "Choose one of the supported locations: %s."
+msgstr ""
+
+#. translators: 1: field type, 2: comma-separated list of allowed locations.
+#: includes/Fields/FieldDefinition.php:1260
+#, php-format
+msgid "A %1$s field can only go in: %2$s."
+msgstr ""
+
+#. translators: %d: maximum number of characters.
+#: includes/Fields/FieldDefinition.php:1289
+#, php-format
+msgid "Field keys cannot be longer than %d characters."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1300
+msgid "Field keys must look like cbwb/my-field: lowercase letters, numbers, and single hyphens."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1325
+msgid "Every field needs a label."
+msgstr ""
+
+#. translators: %s: setting name.
+#: includes/Fields/FieldDefinition.php:1365
+#: includes/Fields/FieldDefinition.php:1410
+#, php-format
+msgid "\"%s\" must be true or false."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1396
+msgid "Visibility must be an object of true/false switches."
+msgstr ""
+
+#. translators: %s: setting name.
+#: includes/Fields/FieldDefinition.php:1442
+#, php-format
+msgid "\"%s\" must be text."
+msgstr ""
+
+#. translators: 1: setting name, 2: maximum number of characters.
+#: includes/Fields/FieldDefinition.php:1457
+#, php-format
+msgid "\"%1$s\" cannot be longer than %2$d characters."
+msgstr ""
+
+#. translators: 1: setting name, 2: comma-separated list of allowed values.
+#: includes/Fields/FieldDefinition.php:1491
+#, php-format
+msgid "\"%1$s\" must be one of: %2$s."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1514
+msgid "Options must be a list."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1519
+msgid "This field needs at least one option."
+msgstr ""
+
+#. translators: %d: maximum number of options.
+#: includes/Fields/FieldDefinition.php:1533
+#, php-format
+msgid "A field cannot have more than %d options."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1547
+msgid "Each option needs a value and a label."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1552
+msgid "Option values and labels must be text."
+msgstr ""
+
+#. translators: %d: maximum number of characters.
+#: includes/Fields/FieldDefinition.php:1565
+#, php-format
+msgid "Option values cannot be longer than %d characters."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1576
+msgid "Option values may only contain letters, numbers, and the characters _ . : and -."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1582
+msgid "Every option needs a label."
+msgstr ""
+
+#. translators: %d: maximum number of characters.
+#: includes/Fields/FieldDefinition.php:1592
+#, php-format
+msgid "Option labels cannot be longer than %d characters."
+msgstr ""
+
+#. translators: %s: duplicated option value.
+#: includes/Fields/FieldDefinition.php:1605
+#, php-format
+msgid "The option value \"%s\" is used more than once."
+msgstr ""
+
+#. translators: %s: comma-separated list of format keys.
+#: includes/Fields/FieldDefinition.php:1641
+#, php-format
+msgid "Choose one of the supported formats: %s."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1665
+msgid "The pattern must be text."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1676
+msgid "Enter a pattern, or choose a different format."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1681
+msgid "That pattern is not a valid regular expression."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1689
+msgid "That pattern must also be a valid JavaScript regular expression, because the checkout runs it in the browser. Remove any syntax JavaScript does not have, such as escapes like \\A or \\Z, inline flags like (?i), atomic groups, possessive quantifiers or POSIX classes."
+msgstr ""
+
+#. translators: %d: maximum allowed value.
+#: includes/Fields/FieldDefinition.php:1717
+#, php-format
+msgid "Maximum length must be a whole number between 1 and %d."
+msgstr ""
+
+#. translators: 1: smallest number of rows, 2: largest number of rows.
+#: includes/Fields/FieldDefinition.php:1747
+#, php-format
+msgid "Rows must be a whole number between %1$d and %2$d."
+msgstr ""
+
+#. translators: %s: setting name.
+#: includes/Fields/FieldDefinition.php:1779
+#, php-format
+msgid "\"%s\" must be a number."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1801
+msgid "The step must be greater than zero."
+msgstr ""
+
+#. translators: %d: largest step in minutes.
+#: includes/Fields/FieldDefinition.php:1828
+#, php-format
+msgid "The step must be a whole number of minutes between 1 and %d."
+msgstr ""
+
+#. translators: %s: setting name.
+#: includes/Fields/FieldDefinition.php:1859
+#, php-format
+msgid "\"%s\" must be a date in YYYY-MM-DD form."
+msgstr ""
+
+#. translators: %s: setting name.
+#: includes/Fields/FieldDefinition.php:1890
+#, php-format
+msgid "\"%s\" must be a time in HH:MM form."
+msgstr ""
+
+#. translators: %s: comma-separated list of heading levels.
+#: includes/Fields/FieldDefinition.php:1944
+#, php-format
+msgid "The heading level must be one of: %s."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:1972
+msgid "\"content\" must be text."
+msgstr ""
+
+#. translators: %d: maximum number of characters.
+#: includes/Fields/FieldDefinition.php:1982
+#, php-format
+msgid "Paragraph text cannot be longer than %d characters."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:2093
+msgid "A checkbox starts out either ticked (\"yes\") or empty."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:2101
+msgid "The starting value must be one of the options."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:2111
+msgid "Every starting value must be one of the options."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:2119
+msgid "The starting date must be in YYYY-MM-DD form."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:2124
+msgid "The starting time must be in HH:MM form."
+msgstr ""
+
+#: includes/Fields/FieldDefinition.php:2148
+msgid "That is not a recognised autocomplete value."
+msgstr ""
+
+#: includes/Fields/FormatPresets.php:50
+msgid "Any text"
+msgstr ""
+
+#: includes/Fields/FormatPresets.php:57
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: includes/Fields/FormatPresets.php:62
+msgid "Please enter a valid phone number."
+msgstr ""
+
+#: includes/Fields/FormatPresets.php:67
+msgid "Please enter a number."
+msgstr ""
+
+#: includes/Fields/FormatPresets.php:72
+msgid "Please enter a valid web address (starting with http:// or https://)."
+msgstr ""
+
+#: includes/Fields/FormatPresets.php:75
+msgid "Letters only"
+msgstr ""
+
+#: includes/Fields/FormatPresets.php:77
+msgid "Please use letters only."
+msgstr ""
+
+#: includes/Fields/FormatPresets.php:80
+msgid "Custom pattern"
+msgstr ""
+
+#. translators: %s: field label.
+#: includes/Fields/Registrar.php:392
+#: includes/Fields/RichValues.php:313
+#, php-format
+msgid "Choose one of the available options for %s."
+msgstr ""
+
+#. translators: 1: field label, 2: maximum number of characters.
+#: includes/Fields/Registrar.php:413
+#: includes/Fields/RichValues.php:240
+#, php-format
+msgid "%1$s cannot be longer than %2$d characters."
+msgstr ""
+
+#. translators: 1: field label, 2: smallest accepted number, 3: largest accepted number.
+#: includes/Fields/Registrar.php:454
+#, php-format
+msgid "%1$s must be between %2$s and %3$s."
+msgstr ""
+
+#. translators: 1: field label, 2: smallest accepted number.
+#: includes/Fields/Registrar.php:467
+#, php-format
+msgid "%1$s must be %2$s or more."
+msgstr ""
+
+#. translators: 1: field label, 2: largest accepted number.
+#: includes/Fields/Registrar.php:479
+#, php-format
+msgid "%1$s must be %2$s or less."
+msgstr ""
+
+#. translators: %s: field label.
+#: includes/Fields/RichValues.php:299
+#, php-format
+msgid "Please fill in %s."
+msgstr ""
+
+#. translators: 1: field label, 2: earliest accepted value.
+#: includes/Fields/RichValues.php:374
+#, php-format
+msgid "%1$s cannot be earlier than %2$s."
+msgstr ""
+
+#. translators: 1: field label, 2: latest accepted value.
+#: includes/Fields/RichValues.php:383
+#, php-format
+msgid "%1$s cannot be later than %2$s."
+msgstr ""
+
+#: includes/Fields/Templates.php:29
+msgid "Delivery instructions"
+msgstr ""
+
+#: includes/Fields/Templates.php:35
+msgid "How did you hear about us?"
+msgstr ""
+
+#: includes/Fields/Templates.php:43
+msgid "Search engine"
+msgstr ""
+
+#: includes/Fields/Templates.php:47
+msgid "Social media"
+msgstr ""
+
+#: includes/Fields/Templates.php:51
+msgid "Friend or family"
+msgstr ""
+
+#: includes/Fields/Templates.php:55
+msgid "Advertisement"
+msgstr ""
+
+#: includes/Fields/Templates.php:59
+msgid "Other"
+msgstr ""
+
+#: includes/Fields/Templates.php:66
+msgid "Purchase order number"
+msgstr ""
+
+#: includes/Fields/Templates.php:73
+msgid "Gift message"
+msgstr ""
+
+#: includes/Fields/Templates.php:83
+msgid "I agree to the terms and conditions"
+msgstr ""
+
+#: includes/Fields/Templates.php:88
+msgid "You must agree to the terms to continue."
+msgstr ""
+
+#: includes/Fields/Templates.php:93
+msgid "VAT number"
+msgstr ""
+
+#: includes/Fields/Templates.php:104
+msgid "Delivery date"
+msgstr ""
+
+#: includes/Fields/Templates.php:107
+msgid "We deliver Monday to Friday."
+msgstr ""
+
+#: includes/Fields/Templates.php:111
+msgid "Gift wrap style"
+msgstr ""
+
+#: includes/Fields/Templates.php:118
+msgid "No gift wrap"
+msgstr ""
+
+#: includes/Fields/Templates.php:122
+msgid "Classic"
+msgstr ""
+
+#: includes/Fields/Templates.php:126
+msgid "Premium"
+msgstr ""
+
+#: includes/Fields/Templates.php:134
+msgid "Special requests"
+msgstr ""
+
+#: includes/Fields/Templates.php:141
+msgid "A few more details"
+msgstr ""
+
+#: includes/Orders/AdminMetaBox.php:77
+#: includes/Privacy/PersonalData.php:104
+#: includes/Privacy/PersonalData.php:123
+#: includes/Privacy/PersonalData.php:558
+msgid "Fieldwright fields"
+msgstr ""
+
+#: includes/Orders/AdminMetaBox.php:194
+#: includes/Orders/AdminMetaBox.php:264
+#: includes/Orders/AdminMetaBox.php:327
+msgid "None"
+msgstr ""
+
+#. translators: %s: minimum WooCommerce version.
+#: includes/Plugin.php:129
+#, php-format
+msgid "Fieldwright requires WooCommerce %s or newer to be installed and active."
+msgstr ""
+
+#: includes/Privacy/PersonalData.php:211
+#: includes/Privacy/PersonalData.php:339
+msgid "Removed the values remembered against the account for Fieldwright fields."
+msgstr ""
+
+#. translators: %s: order number.
+#: includes/Privacy/PersonalData.php:230
+#, php-format
+msgid "Removed Fieldwright field values from order %s."
+msgstr ""
+
+#: includes/Privacy/PersonalData.php:559
+msgid "Values entered into the checkout fields this store added with Fieldwright."
+msgstr ""
+
+#: includes/Rest/CompatibilityController.php:73
+#: includes/Rest/ConfigController.php:122
+#: includes/Rest/SettingsController.php:96
+msgid "You must be logged in."
+msgstr ""
+
+#: includes/Rest/CompatibilityController.php:76
+msgid "You are not allowed to check block checkout compatibility."
+msgstr ""
+
+#: includes/Rest/CompatibilityController.php:94
+msgid "You are not allowed to create pages on this site, so the block checkout preview page cannot be created for you."
+msgstr ""
+
+#: includes/Rest/CompatibilityController.php:121
+msgid "The block checkout preview page could not be created."
+msgstr ""
+
+#: includes/Rest/CompatibilityController.php:181
+msgid "Which checkout the store uses today."
+msgstr ""
+
+#: includes/Rest/CompatibilityController.php:206
+msgid "What each group means, ready to show to the merchant."
+msgstr ""
+
+#: includes/Rest/CompatibilityController.php:227
+msgid "Plugin file, relative to the plugins directory. Empty unless you can activate plugins."
+msgstr ""
+
+#: includes/Rest/CompatibilityController.php:232
+msgid "Installed version. Empty unless you can activate plugins."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:125
+msgid "You are not allowed to manage checkout fields."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:162
+msgid "revision must be text."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:175
+msgid "Configuration payload is too large."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:186
+msgid "Someone else has changed the checkout fields since this screen loaded. Reload to see their changes, then make yours again."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:246
+msgid "core must be an object."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:260
+msgid "Some fields could not be saved. Fix the highlighted problems and try again."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:276
+msgid "fields must be a list."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:300
+msgid "Stable field key, used as the order meta key."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:314
+msgid "One of the built-in types, or a type an add-on registered."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:325
+msgid "Dropdown fields only: the first, unselected choice. Dropped for other types, whose labels leave no room for a placeholder."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:328
+msgid "Dropdown, radio and checkbox group fields only: the choices offered."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:349
+msgid "What the customer reads when the field is left empty or its value does not match. Dropped for dropdowns, headings and paragraphs."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:360
+msgid "Long text fields accept up to 5,000; every other type up to 1,000."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:368
+msgid "Kept in step with visibility.thank_you, in both directions."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:377
+msgid "The value the field starts out with. A comma-separated list on a checkbox group; \"yes\" or empty on a checkbox."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:382
+msgid "Always \"full\" on the types WooCommerce lays out itself."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:395
+msgid "Fields we store ourselves, in the contact or one of the address sections: remember the value against the customer and prefill it next time."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:408
+msgid "Number fields only: the smallest accepted value."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:412
+msgid "Number fields only: the largest accepted value."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:416
+msgid "Number fields: the step between accepted values. Time fields: whole minutes between selectable times."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:425
+msgid "Paragraph fields only. Only a, strong, em and br survive."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:433
+msgid "Settings owned by an add-on. Stored verbatim and validated by the add-on when it is active."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:461
+msgid "Stamp of the configuration this response describes. Send it back with the next save."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:484
+msgid "Changes to WooCommerce's own checkout fields. Only what differs from its defaults is stored."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:498
+msgid "A hidden field is never required; the server makes sure of it."
+msgstr ""
+
+#: includes/Rest/ConfigController.php:509
+msgid "The Address form's display order: WooCommerce's own field keys and Fieldwright field keys in one list."
+msgstr ""
+
+#: includes/Rest/SettingsController.php:99
+msgid "You are not allowed to manage checkout settings."
+msgstr ""
+
+#. translators: %s: name of the request parameter.
+#: includes/Rest/SettingsController.php:155
+#, php-format
+msgid "%s must be true or false."
+msgstr ""
+
+#: includes/Rest/SettingsController.php:186
+msgid "Delete the plugin configuration when the plugin is uninstalled."
+msgstr ""
+
+#: includes/Rest/SettingsController.php:191
+msgid "Whether the checkout says \"(optional)\" after optional fields, or marks required fields with an asterisk."
+msgstr ""
+
+#: includes/Rest/SettingsController.php:195
+msgid "Show the line that explains the asterisk at the top of the checkout."
+msgstr ""

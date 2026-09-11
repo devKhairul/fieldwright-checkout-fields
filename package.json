@@ -1,0 +1,30 @@
+{
+  "name": "fieldwright-checkout-fields",
+  "private": true,
+  "description": "Build tooling for the compiled assets in build/. Deliberately unversioned: this manifest exists to rebuild the plugin, and the plugin version lives in its PHP header and readme.txt.",
+  "license": "GPL-2.0-or-later",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@wordpress/api-fetch": "^7.11.0",
+    "@wordpress/components": "^28.11.0",
+    "@wordpress/compose": "^8.7.0",
+    "@wordpress/data": "^9.28.0",
+    "@wordpress/element": "^6.11.0",
+    "@wordpress/hooks": "^4.54.0",
+    "@wordpress/i18n": "^5.11.0",
+    "@wordpress/icons": "^15.5.0"
+  },
+  "devDependencies": {
+    "@wordpress/dependency-extraction-webpack-plugin": "^6.24.0",
+    "@wordpress/scripts": "^30.4.0"
+  }
+}
