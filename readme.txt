@@ -1,5 +1,5 @@
 === Fieldwright Checkout Fields for WooCommerce ===
-Contributors: methodical, khairul89
+Contributors: khairul89
 Tags: woocommerce, checkout, checkout fields, checkout block, block checkout
 Requires at least: 6.9
 Tested up to: 7.1
