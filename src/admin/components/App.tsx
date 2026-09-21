@@ -13,6 +13,7 @@ import { coreRowId, toCorePayload } from '../lib/coreFields';
 import { createBlankField, fieldFromTemplate } from '../lib/fields';
 import type { ImportedConfig } from '../lib/fields';
 import { extraTabs } from '../lib/hooks';
+import { PRO_TAB, proIsAbsent } from '../lib/pro';
 import { TabProvider } from '../lib/tabs';
 import type { PaneView } from '../lib/layout';
 import type { ErrorMap } from '../lib/validate';
@@ -50,6 +51,8 @@ import ImportExport from './ImportExport';
 import type { AppNotice } from './Notices';
 import Notices from './Notices';
 import Preview from './Preview';
+import ProLine from './ProLine';
+import ProTab from './ProTab';
 import SegmentedControl from './SegmentedControl';
 import SettingsTab from './SettingsTab';
 import Tabs, { tabId, tabPanelId } from './Tabs';
@@ -58,9 +61,20 @@ import Tabs, { tabId, tabPanelId } from './Tabs';
  * The builder's own tabs, by key.
  *
  * Named here as well as built below, because an add-on's tab is appended to
- * these and must not collide with one of them.
+ * these and must not collide with one of them. See `RESERVED_TABS`, which is
+ * these plus the one tab the builder only sometimes draws.
  */
 const OWN_TABS = [ 'fields', 'compatibility', 'settings' ] as const;
+
+/**
+ * The keys an add-on's tab may not take.
+ *
+ * The builder's own three, and the Pro tab, which is on the strip only while
+ * nothing has registered Pro's License tab. Reserved either way: a key that
+ * means one thing on one store and another thing on the next is a key nobody
+ * can write against.
+ */
+const RESERVED_TABS: readonly string[] = [ ...OWN_TABS, PRO_TAB ];
 
 /** How long the undo snackbar sticks around after a delete. */
 const UNDO_TIMEOUT = 8000;
@@ -633,8 +647,16 @@ export default function App() {
 	 * whichever one is open, so an add-on owns the whole screen under the strip
 	 * rather than a card inside somebody else's.
 	 */
-	const addOnTabs = extraTabs( bootstrap, OWN_TABS );
+	const addOnTabs = extraTabs( bootstrap, RESERVED_TABS );
 	const openAddOnTab = addOnTabs.find( ( addOn ) => addOn.key === tab );
+
+	/*
+	 * Pro announces itself by registering its License tab, so a strip without
+	 * one is a store that does not have it. That store is offered a tab saying
+	 * what Pro is; the store that has it is offered nothing, because the screens
+	 * it would point at are already on the strip.
+	 */
+	const showProTab = proIsAbsent( addOnTabs.map( ( addOn ) => addOn.key ) );
 
 	/*
 	 * Named rather than returned, so the tab strip can be published around it
@@ -688,6 +710,17 @@ export default function App() {
 						name: 'settings',
 						title: __( 'Settings', 'fieldwright-checkout-fields' ),
 					},
+					...( showProTab
+						? [
+								{
+									name: PRO_TAB,
+									title: __(
+										'Pro',
+										'fieldwright-checkout-fields'
+									),
+								},
+						  ]
+						: [] ),
 					...addOnTabs.map( ( addOn ) => ( {
 						name: addOn.key,
 						title: addOn.label,
@@ -763,6 +796,15 @@ export default function App() {
 								) }
 							</div>
 						) }
+
+						{ /*
+						 * One line about the paid add-on, under anything the
+						 * builder has to say about this checkout and above the
+						 * outline. It draws itself only while Pro is not
+						 * running and only until this user closes it; see
+						 * ProLine for why it is not a notice.
+						 */ }
+						<ProLine />
 
 						<div className={ `cbwb-builder is-${ mode }-pane` }>
 							{ /*
@@ -946,6 +988,8 @@ export default function App() {
 					/>
 				) }
 
+				{ PRO_TAB === tab && showProTab && <ProTab /> }
+
 				{ openAddOnTab && openAddOnTab.render( { bootstrap } ) }
 			</div>
 
@@ -983,6 +1027,7 @@ export default function App() {
 			value={ {
 				tabs: [
 					...OWN_TABS,
+					...( showProTab ? [ PRO_TAB ] : [] ),
 					...addOnTabs.map( ( addOn ) => addOn.key ),
 				],
 				open: setTab,

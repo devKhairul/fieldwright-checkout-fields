@@ -1757,6 +1757,80 @@ body.woocommerce_page_cbwb-fieldwright-checkout-fields {
 
 }
 
+/* ---------------------------------------------------------- The add-on.
+ *
+ * Everywhere the builder names Fieldwright Pro. Three places, all of them
+ * contextual and none of them loud: a line above the outline, a tab, and the
+ * sentences at the foot of a field's settings. The type picker's own line is
+ * further up this file, with the picker.
+ */
+
+/*
+ * The one line above the field list. Body text on the page's own background,
+ * with a rule under it and nothing else: no tint, no icon, no status colour. It
+ * has to read as part of the screen rather than as something that happened.
+ */
+.cbwb-pro-line {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 4px 8px;
+	margin: 0 0 var(--cbwb-gap-lg);
+	padding-bottom: 8px;
+	border-bottom: 1px solid var(--cbwb-stroke);
+	color: var(--cbwb-text-muted);
+
+	/* Pinned to the end of the row, wherever the text wrapped to. */
+	&__close {
+		margin-inline-start: auto;
+	}
+}
+
+/* The Pro tab's own two additions; the rest is the Settings tab's layout. */
+.cbwb-pro {
+
+	&__list {
+		margin: 0 0 var(--cbwb-gap-lg);
+		padding-inline-start: 20px;
+		list-style: disc;
+
+		li + li {
+			margin-top: 4px;
+		}
+	}
+
+	&__note {
+		margin: 0 0 var(--cbwb-gap-lg);
+		color: var(--cbwb-text-muted);
+	}
+
+	&__actions {
+		margin-bottom: var(--cbwb-gap-lg);
+	}
+
+	/* The last line of the card has nothing under it to be spaced from. */
+	&__note:last-child {
+		margin-bottom: 0;
+	}
+}
+
+/*
+ * The sentences at the foot of a field's settings. One section's gutter for the
+ * group, with the headings and the lines under them drawn exactly as a real
+ * section's are, because that is what they describe.
+ */
+.cbwb-pro-stubs {
+
+	&__item + &__item {
+		margin-top: var(--cbwb-gap);
+	}
+
+	&__link {
+		margin: var(--cbwb-gap) 0 0;
+		font-size: 12px;
+	}
+}
+
 /* -------------------------------------------------------- Compatibility. */
 
 /*

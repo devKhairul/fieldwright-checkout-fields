@@ -20,6 +20,7 @@ use CheckoutBuilder\Fields\Templates;
 use CheckoutBuilder\Fields\TypeRegistry;
 use CheckoutBuilder\Rest\CompatibilityController;
 use CheckoutBuilder\Rest\ConfigController;
+use CheckoutBuilder\Rest\ProLineController;
 use CheckoutBuilder\Rest\SettingsController;
 
 defined( 'ABSPATH' ) || exit;
@@ -159,6 +160,12 @@ final class Page {
 			// The migration assistant scans on demand: the admin app calls this
 			// route (and `<route>/draft-page`) only when the merchant opens it.
 			'compatibilityRoute'        => CompatibilityController::NAMESPACE . CompatibilityController::ROUTE,
+			// The one line about the paid add-on: where it is closed, and
+			// whether this user has closed it already. The answer travels with
+			// the page rather than being fetched, so the line never paints and
+			// then takes itself away again.
+			'proLineRoute'              => ProLineController::NAMESPACE . ProLineController::ROUTE,
+			'proLineDismissed'          => ProLineController::is_dismissed( get_current_user_id() ),
 			'config'                    => $this->config->get(),
 			'settings'                  => $this->config->settings(),
 			'idPrefix'                  => FieldDefinition::ID_PREFIX,

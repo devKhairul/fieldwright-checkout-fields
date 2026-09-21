@@ -52,6 +52,11 @@ function cbwb_uninstall_site(): void {
 		}
 	}
 
+	// Whoever closed the one line about the paid add-on. A preference of a
+	// reader's rather than anything a customer typed, so it goes with the rest
+	// of the plugin's own state.
+	delete_metadata( 'user', 0, 'cbwb_pro_line_dismissed', '', true );
+
 	// Warning flags: one row per broken pattern or placement, written from the
 	// checkout and expiring on their own within the hour. Deleted directly
 	// because their names carry a hash of what they describe, so there is no list

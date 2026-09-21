@@ -327,7 +327,17 @@ difference between the two: use `cbwb.settingsSections` for a settings panel and
 `cbwb.tabs` for a screen that is not settings. A tab key becomes part of an
 element id, so it is limited to letters, numbers, hyphens and underscores; an
 entry that is malformed, that repeats a key or that takes one of the builder's
-own (`fields`, `compatibility`, `settings`) is dropped rather than rendered.
+own (`fields`, `compatibility`, `settings`, `pro`) is dropped rather than
+rendered.
+
+`pro` is reserved since 1.2.0. Fieldwright puts its own Pro tab there whenever
+no tab has been registered under `cbwb-pro-license`, which is the key Fieldwright
+Pro's License tab uses, and the key is reserved whether or not that tab is being
+drawn: a key that means one thing on one store and another on the next is a key
+nobody can write against. Registering `cbwb-pro-license` is therefore also how an
+add-on says the builder's own Pro tab, the line above the field list and the
+sentences at the foot of a field's settings are not wanted, because the screens
+they point at are the add-on's own.
 
 ### The preview's Live mode
 
@@ -514,6 +524,13 @@ reports every validation problem at once, with a path per field. `GET` and
 `GET /cbwb/v1/compatibility` is the migration assistant's report. They all need
 `manage_woocommerce`, as does `POST /cbwb/v1/compatibility/draft-page`, which
 creates the draft preview page and also asks for `edit_pages`.
+
+`POST /cbwb/v1/pro-line`, since 1.2.0, takes a `dismissed` boolean and records
+whether the line about the paid add-on stays hidden for the user who sent it. It
+is user meta (`cbwb_pro_line_dismissed`) rather than a setting, so two merchants
+sharing a store each decide for themselves, and it needs `manage_woocommerce`
+like the rest. The current answer travels in the bootstrap as
+`window.cbwbAdmin.proLineDismissed`, with the route as `proLineRoute`.
 
 The values Fieldwright stores itself travel on the Store API as
 `extensions.cbwb` on `POST /wc/store/v1/checkout`, keyed by field id (the bare key

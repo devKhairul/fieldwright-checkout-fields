@@ -71,6 +71,7 @@ import type {
 	ValidationError,
 } from '../types';
 import OptionsEditor from './OptionsEditor';
+import ProSections from './ProSections';
 import SegmentedControl from './SegmentedControl';
 import TypePicker from './TypePicker';
 
@@ -1311,6 +1312,13 @@ export default function FieldEditor( {
 			</Section>
 
 			{ sectionsAt( 'afterVisibility' ) }
+
+			{ /*
+			 * Last of the sections, and only while Pro is not running: what it
+			 * would add to a field of this type, as sentences rather than as
+			 * controls that would do nothing. See ProSections.
+			 */ }
+			<ProSections field={ field } />
 
 			<Panel className="cbwb-editor__advanced">
 				<PanelBody

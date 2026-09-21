@@ -537,6 +537,16 @@ export interface AdminBootstrap {
 	 * calls this, and `<compatibilityRoute>/draft-page`, only once opened.
 	 */
 	compatibilityRoute: string;
+	/**
+	 * Where the one line about the paid add-on is closed for good. A POST, and
+	 * the only thing the builder writes that is not about the checkout.
+	 */
+	proLineRoute: string;
+	/**
+	 * Whether this user has already closed that line. Carried here rather than
+	 * fetched, so the line never paints and then takes itself away again.
+	 */
+	proLineDismissed: boolean;
 	config: Config;
 	settings: Settings;
 	idPrefix: string;

@@ -29,6 +29,7 @@ import { useCallback, useEffect, useRef } from '@wordpress/element';
 import { chevronDown } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
+import { PRO_URL } from '../lib/pro';
 import type { ResolvedType, TypeGroupKey } from '../lib/typeMeta';
 import { TYPE_GROUP_ORDER, typeGroupLabels } from '../lib/typeMeta';
 import type { FieldLocation, FieldType } from '../types';
@@ -41,15 +42,6 @@ interface ToggleArgs {
 
 /** An `@wordpress/icons` export, as `Button`'s `icon` prop takes it. */
 type IconElement = typeof chevronDown;
-
-/**
- * Where the one line at the foot of the grid goes.
- *
- * Written down here rather than sent with the bootstrap data: the plugin is the
- * same for everyone, the address does not vary by store, and a link the server
- * has to supply is a link the server has to have an opinion about.
- */
-const MORE_TYPES_URL = 'https://fieldwright.methodicalstudio.com/pro/';
 
 interface TypeGridProps {
 	types: ResolvedType[];
@@ -191,17 +183,13 @@ function TypeGrid( { types, value, onPick, instanceId }: TypeGridProps ) {
 				</div>
 			) ) }
 			{ /*
-			 * The one place the builder mentions the paid add-on. A line at the
-			 * foot of the grid, where a merchant looking for a type the plugin
-			 * does not have is already looking, and nowhere else: no tags on
-			 * cards, no panels standing in for settings.
+			 * The paid add-on, where a merchant looking for a type the plugin
+			 * does not have is already looking. The same restraint everywhere it
+			 * is named: no tags on cards, no panels standing in for settings, and
+			 * nothing that interrupts what the merchant came here to do.
 			 */ }
 			<p className="cbwb-type-picker__more">
-				<a
-					href={ MORE_TYPES_URL }
-					target="_blank"
-					rel="noopener noreferrer"
-				>
+				<a href={ PRO_URL } target="_blank" rel="noopener noreferrer">
 					{ __(
 						'More field types and rules are available in Fieldwright Pro.',
 						'fieldwright-checkout-fields'

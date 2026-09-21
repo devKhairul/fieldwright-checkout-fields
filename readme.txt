@@ -4,7 +4,7 @@ Tags: woocommerce, checkout, checkout fields, checkout block, block checkout
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ Then it adds fields of your own. Fourteen types, nine positions on the checkout 
 
 Answers are shown where you and your customer look for them: on the admin order screen, where you can also edit them, in the order emails, on the order confirmation page, and in the customer's order history. Each of those can be switched off per field.
 
-**No banners and no popups.** Fieldwright puts nothing in your dashboard except its own screen.
+**No banners and no popups.** Fieldwright puts nothing in your dashboard except its own screen: no admin notices, no review prompts. Inside that screen its paid add-on is named in a few places you can read past, one of them a line you can close for good.
 
 Everything described on this page is in this plugin. A separate paid add-on, **Fieldwright Pro**, adds a file upload field type, conditions, "required when" rules, checkout fees, an orders list column, CSV export of orders with their answers, answers on PDF invoices, default values for WooCommerce's own fields, date rules including a minimum age, and delivery time slots. It is sold and supported from our own site and is not needed for anything described here.
 
@@ -114,7 +114,16 @@ No. Fieldwright uses WooCommerce's Additional Checkout Fields API, which only wo
 
 = Will the free plugin nag me? =
 
-No. There are no admin notices, no banners, no review prompts and no popups. The paid add-on is named in exactly one place: a single line at the foot of the field type picker, with a link. Nothing in this plugin is switched off, counted or held back waiting for it.
+No. Nothing of it appears outside its own screen: no admin notices, no banners on your dashboard, no popups and no review prompts.
+
+Inside the builder, the paid add-on is named in four places, each of them part of a screen you are already reading:
+
+* One line above the field list, with a close button. Closing it keeps it closed for you, for good.
+* A **Pro** tab, last of the builder's own tabs, which says what the add-on is. Installing the add-on replaces that tab with its own License screen.
+* One line at the foot of the field type picker.
+* Under a field's settings, a sentence for each section the add-on would add to a field of that type. They are sentences, not controls: nothing is drawn as a switch you cannot use.
+
+None of the four appears on a store that has the add-on installed. Nothing in this plugin is switched off, counted or held back waiting for it.
 
 = Is anything in this plugin limited? =
 
@@ -157,6 +166,13 @@ Fieldwright is built to be extended, and every hook, filter, JavaScript API and 
 
 == Changelog ==
 
+= 1.2.0 =
+* A **Pro** tab in the builder, after the plugin's own three, saying what the paid add-on adds and how it is sold. Installing the add-on puts its own License screen in that tab's place.
+* One line above the field list naming the add-on, with a close button. Closing it keeps it closed for that user, for good. It is not an admin notice and it is on no other screen.
+* Under a field's settings, a sentence for each section the add-on would add to a field of that type. Sentences, not controls: nothing is drawn as a switch that cannot be used.
+* None of the three appears on a store that has the add-on installed.
+* For developers: `pro` joins `fields`, `compatibility` and `settings` as a tab key `cbwb.tabs` will not hand out, and `POST /cbwb/v1/pro-line` records that a user closed the line. See "For developers".
+
 = 1.1.0 =
 * Checkbox group, date and time fields are part of the plugin, and there is no longer a count of fields that collect an answer.
 * An add-on can register field types of its own, and a field whose add-on is not running stays in the builder untouched until it is. See "For developers".
@@ -172,5 +188,5 @@ Fieldwright is built to be extended, and every hook, filter, JavaScript API and 
 * Personal data tooling: an exporter and an eraser for WordPress's own privacy tools, and support for WooCommerce's "Remove personal data" bulk action, its retention schedule and its customer erasure.
 * A Compatibility tab that says which checkout the store renders today, names the plugins that only work with the classic one, and offers a draft copy of the checkout page to try the Checkout block on.
 * Import and export of the configuration as JSON, ten ready made fields in the builder's empty state, and a save that refuses to overwrite a change somebody else made since your screen loaded.
-* No banners, no popups, no tracking and no requests to any server of ours. Built on WooCommerce's Additional Checkout Fields API wherever that API can carry a field.
+* No banners on your dashboard, no popups, no tracking and no requests to any server of ours. Built on WooCommerce's Additional Checkout Fields API wherever that API can carry a field.
 * Every hook, filter, JavaScript API and REST route is a public contract, documented for developers: see "For developers".

@@ -22,6 +22,7 @@ use CheckoutBuilder\Orders\Frontend;
 use CheckoutBuilder\Privacy\PersonalData;
 use CheckoutBuilder\Rest\CompatibilityController;
 use CheckoutBuilder\Rest\ConfigController;
+use CheckoutBuilder\Rest\ProLineController;
 use CheckoutBuilder\Rest\SettingsController;
 
 defined( 'ABSPATH' ) || exit;
@@ -224,5 +225,6 @@ final class Plugin {
 		( new ConfigController( $this->config ) )->register_routes();
 		( new SettingsController( $this->config ) )->register_routes();
 		( new CompatibilityController() )->register_routes();
+		( new ProLineController() )->register_routes();
 	}
 }

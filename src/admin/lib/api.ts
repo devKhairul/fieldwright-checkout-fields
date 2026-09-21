@@ -98,6 +98,24 @@ export function createCompatibilityDraftPage(): Promise< CompatibilityDraftPage 
 }
 
 /**
+ * Close the one line about the paid add-on, for this user, for good.
+ *
+ * A preference of the reader's rather than of the store's, so it is user meta
+ * behind its own route rather than another key on the settings option: two
+ * merchants sharing a store each decide for themselves, and closing a line
+ * never rewrites anything about the checkout.
+ *
+ * @return What the server stored.
+ */
+export function dismissProLine(): Promise< { dismissed: boolean } > {
+	return apiFetch< { dismissed: boolean } >( {
+		path: getBootstrap().proLineRoute,
+		method: 'POST',
+		data: { dismissed: true },
+	} );
+}
+
+/**
  * Narrow an unknown rejection into the REST error envelope.
  *
  * @param error Rejected value.

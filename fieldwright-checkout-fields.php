@@ -3,7 +3,7 @@
  * Plugin Name:          Fieldwright Checkout Fields for WooCommerce
  * Plugin URI:           https://fieldwright.methodicalstudio.com/
  * Description:          Add checkout fields and control WooCommerce's own fields on the Checkout block, with no code.
- * Version:              1.1.0
+ * Version:              1.2.0
  * Requires at least:    6.9
  * Requires PHP:         7.4
  * Requires Plugins:     woocommerce
@@ -26,7 +26,7 @@ if ( defined( 'CBWB_VERSION' ) ) {
 	return;
 }
 
-define( 'CBWB_VERSION', '1.1.0' );
+define( 'CBWB_VERSION', '1.2.0' );
 define( 'CBWB_FILE', __FILE__ );
 define( 'CBWB_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CBWB_URL', plugin_dir_url( __FILE__ ) );
