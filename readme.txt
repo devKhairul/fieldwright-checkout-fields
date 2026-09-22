@@ -4,7 +4,7 @@ Tags: woocommerce, checkout, checkout fields, checkout block, block checkout
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -127,7 +127,7 @@ None of the four appears on a store that has the add-on installed. Nothing in th
 
 = Is anything in this plugin limited? =
 
-No. Every field type, every position, every setting and every display surface described on this page works in full. The paid add-on adds things this plugin does not have; it does not switch on anything this plugin already has.
+No. The builder holds up to 50 fields, the same in the free plugin and the add-on; a checkout wants far fewer than that, and the ceiling keeps every checkout request quick. Every field type, every position, every setting and every display surface described on this page works in full. The paid add-on adds things this plugin does not have; it does not switch on anything this plugin already has.
 
 = Does it work with WPML or Polylang? =
 
@@ -165,6 +165,11 @@ Fieldwright is built to be extended, and every hook, filter, JavaScript API and 
 **Source code.** The files in `build/` are compiled and minified from the TypeScript and React sources in `src/`, and both the sources and the build tooling are in that same repository. To rebuild them: `npm ci`, then `npm run build`, which runs `wp-scripts build`.
 
 == Changelog ==
+
+= 1.2.1 =
+* The field count above the outline reads as a count of what you have built. The ceiling of 50 fields is named only once you are within ten of it, where it is something you can act on.
+* A warning above the field list on a store whose checkout page still uses the classic checkout shortcode, saying that the fields built here will not appear until the page is switched, and opening the Compatibility tab.
+* The answer to "Is anything in this plugin limited?" now names that ceiling and says it is the same in the free plugin and the add-on.
 
 = 1.2.0 =
 * A **Pro** tab in the builder, after the plugin's own three, saying what the paid add-on adds and how it is sold. Installing the add-on puts its own License screen in that tab's place.

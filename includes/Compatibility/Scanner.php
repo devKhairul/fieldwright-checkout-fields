@@ -393,6 +393,37 @@ final class Scanner {
 	}
 
 	/**
+	 * Which checkout the store's checkout page renders, and nothing else.
+	 *
+	 * The cheap half of the scan: one `get_post()` on a page WordPress has
+	 * usually cached already, and a parse of its content. Nothing here reads the
+	 * plugin list or WooCommerce's feature registry, which is what makes it safe
+	 * to ask on every load of the builder rather than only when the merchant
+	 * opens the Compatibility tab.
+	 *
+	 * Same blind spot as the full scan: a block theme can serve the checkout
+	 * from a site-editor template instead of the page's content, and such a store
+	 * reads as `classic` or `unknown` here while the front end renders blocks.
+	 *
+	 * @return string One of the TYPE_* constants.
+	 */
+	public static function checkout_page_type(): string {
+		if ( ! function_exists( 'wc_get_page_id' ) ) {
+			return self::TYPE_UNKNOWN;
+		}
+
+		// wc_get_page_id() answers -1 when no checkout page is assigned.
+		$page_id = (int) wc_get_page_id( 'checkout' );
+		if ( $page_id <= 0 ) {
+			return self::TYPE_UNKNOWN;
+		}
+
+		$post = get_post( $page_id );
+
+		return $post instanceof WP_Post ? self::page_type( $post ) : self::TYPE_UNKNOWN;
+	}
+
+	/**
 	 * Classify a checkout page's content.
 	 *
 	 * @param WP_Post $post Checkout page.

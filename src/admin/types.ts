@@ -568,6 +568,13 @@ export interface AdminBootstrap {
 	templates: Field[];
 	checkoutUrl: string;
 	/**
+	 * Which checkout that page renders today, read from its stored content when
+	 * the builder loaded. Absent on a bootstrap written before the check
+	 * existed, and an absent answer says nothing rather than warning: a notice
+	 * about the wrong checkout is only worth drawing when the server is sure.
+	 */
+	checkoutType?: CheckoutType;
+	/**
 	 * The site's date format, from Settings → General, as a PHP date format
 	 * string. Anything the builder writes a date into writes it the way the
 	 * rest of the site does, rather than as the `YYYY-MM-DD` a picker hands

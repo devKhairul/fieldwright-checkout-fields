@@ -10,6 +10,7 @@ declare( strict_types=1 );
 namespace CheckoutBuilder\Admin;
 
 use CheckoutBuilder\Blocks\RichFields;
+use CheckoutBuilder\Compatibility\Scanner;
 use CheckoutBuilder\Config;
 use CheckoutBuilder\Fields\AutocompleteTokens;
 use CheckoutBuilder\Fields\CoreFields;
@@ -198,6 +199,12 @@ final class Page {
 			'shipToDestination'         => (string) get_option( 'woocommerce_ship_to_destination', 'billing' ),
 			'wcShippingSettingsUrl'     => admin_url( 'admin.php?page=wc-settings&tab=shipping&section=options' ),
 			'checkoutUrl'               => function_exists( 'wc_get_checkout_url' ) ? wc_get_checkout_url() : '',
+			// Which checkout that page renders today. Fields built here reach the
+			// Checkout block and nothing else, so a store on the classic checkout
+			// has to be told so here, where it is building them, rather than find
+			// out from a checkout with nothing on it. Only the page is read: the
+			// plugin scan behind the Compatibility tab stays on demand.
+			'checkoutType'              => Scanner::checkout_page_type(),
 			// The site's own date format, from Settings → General. Anything the
 			// builder writes a date into — a blocked date on a date field, say —
 			// writes it the way the rest of this site writes dates, rather than

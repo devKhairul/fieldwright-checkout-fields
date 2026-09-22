@@ -10,7 +10,7 @@ import {
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 
 import { useMemo } from '@wordpress/element';
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 import type { CoreRow, OutlineRow, PseudoRow } from '../lib/coreFields';
 import {
@@ -32,6 +32,15 @@ import {
 } from '../state/actions';
 import type { FieldLocation, FieldType, PlacementMeta } from '../types';
 import FieldGroup from './FieldGroup';
+
+/**
+ * How many rows short of the ceiling the count starts naming it.
+ *
+ * Ten is far enough ahead that nobody meets the maximum without having been
+ * told it was coming, and near enough that a checkout of ordinary size never
+ * reads a number it has no use for.
+ */
+const CEILING_IS_NEAR = 10;
 
 interface FieldListProps {
 	groups: FieldsByLocation;
@@ -277,6 +286,48 @@ export default function FieldList( {
 		}
 	};
 
+	/*
+	 * The ceiling is an engineering bound, not an allowance: fifty rows is what
+	 * one option can carry without making every checkout request slower, and a
+	 * checkout wants a small fraction of that. Printing it beside a count of
+	 * three turns it into a quota the store is being measured against, and the
+	 * store starts wondering what the bigger plan costs. So the count is a
+	 * count, and the ceiling only joins it once it is close enough to be news.
+	 */
+	const nearCeiling = used >= limit - CEILING_IS_NEAR;
+
+	const counted = nearCeiling
+		? sprintf(
+				/* translators: 1: number of fields in use, 2: maximum number of fields. */
+				__( '%1$d of %2$d', 'fieldwright-checkout-fields' ),
+				used,
+				limit
+		  )
+		: sprintf(
+				/* translators: %d: number of fields. */
+				_n(
+					'%d field',
+					'%d fields',
+					used,
+					'fieldwright-checkout-fields'
+				),
+				used
+		  );
+
+	/*
+	 * The same answer, said in full. "6 of 50" beside a heading called Fields is
+	 * clear enough to look at and says nothing at all to a screen reader, which
+	 * hears the two as separate strings; "6 fields" already stands on its own.
+	 */
+	const spoken = nearCeiling
+		? sprintf(
+				/* translators: 1: number of fields in use, 2: maximum number of fields. */
+				__( '%1$d of %2$d fields used', 'fieldwright-checkout-fields' ),
+				used,
+				limit
+		  )
+		: counted;
+
 	return (
 		<section
 			className="cbwb-pane cbwb-pane--fields cbwb-list"
@@ -293,32 +344,13 @@ export default function FieldList( {
 					{ __( 'Fields', 'fieldwright-checkout-fields' ) }
 				</h2>
 				{ /*
-				 * "6 of 50" beside a heading called Fields is clear enough to
-				 * look at and says nothing at all to a screen reader, which
-				 * hears the two as separate strings. It counts the merchant's
-				 * own fields only: the ceiling is theirs, and WooCommerce's own
-				 * rows are not something they can add or remove.
+				 * The merchant's own fields only: the ceiling is theirs, and
+				 * WooCommerce's own rows are not something they can add or
+				 * remove.
 				 */ }
 				<p className="cbwb-list__count">
-					<span aria-hidden="true">
-						{ sprintf(
-							/* translators: 1: number of fields in use, 2: maximum number of fields. */
-							__( '%1$d of %2$d', 'fieldwright-checkout-fields' ),
-							used,
-							limit
-						) }
-					</span>
-					<span className="cbwb-visually-hidden">
-						{ sprintf(
-							/* translators: 1: number of fields in use, 2: maximum number of fields. */
-							__(
-								'%1$d of %2$d fields used',
-								'fieldwright-checkout-fields'
-							),
-							used,
-							limit
-						) }
-					</span>
+					<span aria-hidden="true">{ counted }</span>
+					<span className="cbwb-visually-hidden">{ spoken }</span>
 				</p>
 			</div>
 

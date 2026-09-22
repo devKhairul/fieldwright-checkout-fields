@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Fieldwright Checkout Fields for WooCommerce 1.2.0\n"
+"Project-Id-Version: Fieldwright Checkout Fields for WooCommerce 1.2.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/fieldwright-checkout-fields\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-21T04:54:06+00:00\n"
+"POT-Creation-Date: 2026-09-22T21:48:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fieldwright-checkout-fields\n"
@@ -39,13 +39,13 @@ msgstr ""
 msgid "https://methodicalstudio.com"
 msgstr ""
 
-#: includes/Admin/Page.php:84
 #: includes/Admin/Page.php:85
-#: build/admin.js:46
+#: includes/Admin/Page.php:86
+#: build/admin.js:47
 msgid "Fieldwright"
 msgstr ""
 
-#: includes/Admin/Page.php:213
+#: includes/Admin/Page.php:220
 #: includes/Fields/Registrar.php:229
 #: includes/Fields/Templates.php:39
 #: build/admin.js:2
@@ -53,259 +53,259 @@ msgid "Choose an option"
 msgstr ""
 
 #. translators: %s: field label.
-#: includes/Admin/Page.php:261
+#: includes/Admin/Page.php:268
 #, php-format
 msgid "The format rule for “%s” caused a regular expression error at checkout; customers may be blocked from ordering until you change it."
 msgstr ""
 
 #. translators: %s: placement name, e.g. "Before the place order button".
-#: includes/Admin/Page.php:287
+#: includes/Admin/Page.php:294
 #, php-format
 msgid "The “%s” position is not on your checkout page, so fields placed there were shown at the end of the checkout form instead."
 msgstr ""
 
-#: includes/Admin/Page.php:310
+#: includes/Admin/Page.php:317
 #: build/admin.js:2
 msgid "Contact"
 msgstr ""
 
-#: includes/Admin/Page.php:311
+#: includes/Admin/Page.php:318
 #: build/admin.js:2
 msgid "Shown at the top of checkout, next to the email address."
 msgstr ""
 
-#: includes/Admin/Page.php:312
+#: includes/Admin/Page.php:319
 #: build/admin.js:2
 msgid "Saved to the customer's account."
 msgstr ""
 
-#: includes/Admin/Page.php:316
+#: includes/Admin/Page.php:323
 #: build/admin.js:1
 #: build/admin.js:2
 msgid "Address"
 msgstr ""
 
-#: includes/Admin/Page.php:317
+#: includes/Admin/Page.php:324
 #: build/admin.js:2
 msgid "Shown inside both the shipping and billing address forms."
 msgstr ""
 
-#: includes/Admin/Page.php:318
+#: includes/Admin/Page.php:325
 #: build/admin.js:2
 msgid "Saved to the customer's address book."
 msgstr ""
 
-#: includes/Admin/Page.php:322
+#: includes/Admin/Page.php:329
 #: build/admin.js:2
 msgid "Order information"
 msgstr ""
 
-#: includes/Admin/Page.php:323
+#: includes/Admin/Page.php:330
 #: build/admin.js:2
 msgid "Shown in the Additional order information section, above the payment methods."
 msgstr ""
 
-#: includes/Admin/Page.php:324
+#: includes/Admin/Page.php:331
 #: build/admin.js:2
 msgid "Saved on the order only."
 msgstr ""
 
-#: includes/Admin/Page.php:356
+#: includes/Admin/Page.php:363
 #: build/admin.js:2
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "Shipping address"
 msgstr ""
 
-#: includes/Admin/Page.php:357
+#: includes/Admin/Page.php:364
 msgid "Shown only in the shipping address form, after WooCommerce's own fields. A required field here is only required when that form is shown."
 msgstr ""
 
-#: includes/Admin/Page.php:361
+#: includes/Admin/Page.php:368
 #: build/admin.js:2
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "Billing address"
 msgstr ""
 
-#: includes/Admin/Page.php:362
+#: includes/Admin/Page.php:369
 msgid "Shown only in the billing address form, after WooCommerce's own fields. A required field here is only required when that form is shown."
 msgstr ""
 
-#: includes/Admin/Page.php:369
+#: includes/Admin/Page.php:376
 #: build/admin.js:2
 msgid "After shipping options"
 msgstr ""
 
-#: includes/Admin/Page.php:370
+#: includes/Admin/Page.php:377
 msgid "Below the list of shipping methods, where a question about the delivery belongs."
 msgstr ""
 
-#: includes/Admin/Page.php:374
+#: includes/Admin/Page.php:381
 #: build/admin.js:2
 msgid "After payment options"
 msgstr ""
 
-#: includes/Admin/Page.php:375
+#: includes/Admin/Page.php:382
 msgid "Below the payment methods, before the order notes."
 msgstr ""
 
-#: includes/Admin/Page.php:379
+#: includes/Admin/Page.php:386
 #: build/admin.js:2
 msgid "Before the Place order button"
 msgstr ""
 
-#: includes/Admin/Page.php:380
+#: includes/Admin/Page.php:387
 msgid "The last thing the customer reads before they pay."
 msgstr ""
 
-#: includes/Admin/Page.php:384
+#: includes/Admin/Page.php:391
 #: build/admin.js:2
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "Order summary"
 msgstr ""
 
-#: includes/Admin/Page.php:385
+#: includes/Admin/Page.php:392
 msgid "Inside the summary panel beside the form, under the totals."
 msgstr ""
 
-#: includes/Admin/Page.php:410
+#: includes/Admin/Page.php:417
 #: build/admin.js:2
 #: build/admin.js:27
 msgid "Text"
 msgstr ""
 
-#: includes/Admin/Page.php:411
+#: includes/Admin/Page.php:418
 msgid "A single-line text box, with optional format and length rules."
 msgstr ""
 
-#: includes/Admin/Page.php:415
+#: includes/Admin/Page.php:422
 #: includes/Fields/FormatPresets.php:55
 #: build/admin.js:1
 #: build/admin.js:2
 msgid "Email address"
 msgstr ""
 
-#: includes/Admin/Page.php:416
+#: includes/Admin/Page.php:423
 msgid "A text box that only accepts an email address, with the right keyboard on a phone."
 msgstr ""
 
-#: includes/Admin/Page.php:420
+#: includes/Admin/Page.php:427
 #: includes/Fields/FormatPresets.php:60
 #: build/admin.js:2
 msgid "Phone number"
 msgstr ""
 
-#: includes/Admin/Page.php:421
+#: includes/Admin/Page.php:428
 msgid "A text box that only accepts a phone number, with the dial pad on a phone."
 msgstr ""
 
-#: includes/Admin/Page.php:425
+#: includes/Admin/Page.php:432
 #: includes/Fields/FormatPresets.php:65
 #: build/admin.js:2
 msgid "Number"
 msgstr ""
 
-#: includes/Admin/Page.php:426
+#: includes/Admin/Page.php:433
 msgid "A number, with an optional smallest and largest value."
 msgstr ""
 
-#: includes/Admin/Page.php:430
+#: includes/Admin/Page.php:437
 #: includes/Fields/FormatPresets.php:70
 #: build/admin.js:2
 msgid "Web address"
 msgstr ""
 
-#: includes/Admin/Page.php:431
+#: includes/Admin/Page.php:438
 msgid "A link, which has to start with http:// or https://."
 msgstr ""
 
-#: includes/Admin/Page.php:435
+#: includes/Admin/Page.php:442
 #: build/admin.js:2
 msgid "Dropdown"
 msgstr ""
 
-#: includes/Admin/Page.php:436
+#: includes/Admin/Page.php:443
 #: build/admin.js:2
 msgid "A list of options the customer picks one of."
 msgstr ""
 
-#: includes/Admin/Page.php:440
+#: includes/Admin/Page.php:447
 #: build/admin.js:2
 msgid "Checkbox"
 msgstr ""
 
-#: includes/Admin/Page.php:441
+#: includes/Admin/Page.php:448
 #: build/admin.js:2
 msgid "A single yes/no tick box, for consent and opt-ins."
 msgstr ""
 
-#: includes/Admin/Page.php:445
+#: includes/Admin/Page.php:452
 #: build/admin.js:2
 msgid "Long text"
 msgstr ""
 
-#: includes/Admin/Page.php:446
+#: includes/Admin/Page.php:453
 msgid "A multi-line box, for gift messages and delivery instructions."
 msgstr ""
 
-#: includes/Admin/Page.php:450
+#: includes/Admin/Page.php:457
 #: build/admin.js:2
 msgid "Radio buttons"
 msgstr ""
 
-#: includes/Admin/Page.php:451
+#: includes/Admin/Page.php:458
 msgid "The same choice as a dropdown, with every option visible at once."
 msgstr ""
 
-#: includes/Admin/Page.php:455
+#: includes/Admin/Page.php:462
 #: build/admin.js:2
 msgid "Checkbox group"
 msgstr ""
 
-#: includes/Admin/Page.php:456
+#: includes/Admin/Page.php:463
 msgid "A list the customer can tick more than one of."
 msgstr ""
 
-#: includes/Admin/Page.php:460
+#: includes/Admin/Page.php:467
 #: build/admin.js:2
 msgid "Date"
 msgstr ""
 
-#: includes/Admin/Page.php:461
+#: includes/Admin/Page.php:468
 msgid "A date picker, with an optional earliest and latest date."
 msgstr ""
 
-#: includes/Admin/Page.php:465
+#: includes/Admin/Page.php:472
 #: build/admin.js:2
 msgid "Time"
 msgstr ""
 
-#: includes/Admin/Page.php:466
+#: includes/Admin/Page.php:473
 msgid "A time picker, with an optional earliest and latest time."
 msgstr ""
 
-#: includes/Admin/Page.php:470
+#: includes/Admin/Page.php:477
 #: build/admin.js:2
 msgid "Heading"
 msgstr ""
 
-#: includes/Admin/Page.php:471
+#: includes/Admin/Page.php:478
 msgid "A title that breaks the checkout into sections. Nothing is asked or stored."
 msgstr ""
 
-#: includes/Admin/Page.php:475
+#: includes/Admin/Page.php:482
 #: build/admin.js:2
 msgid "Paragraph"
 msgstr ""
 
-#: includes/Admin/Page.php:476
+#: includes/Admin/Page.php:483
 msgid "A note to the customer. Nothing is asked or stored."
 msgstr ""
 
-#: includes/Admin/Page.php:513
+#: includes/Admin/Page.php:520
 msgid "You do not have permission to access this page."
 msgstr ""
 
-#: includes/Admin/Page.php:517
+#: includes/Admin/Page.php:524
 msgid "The admin app has not been built. Run \"npm run build\" in the plugin directory."
 msgstr ""
 
@@ -365,19 +365,19 @@ msgstr ""
 msgid "Checkout (block preview)"
 msgstr ""
 
-#: includes/Compatibility/Scanner.php:419
+#: includes/Compatibility/Scanner.php:450
 msgid "These plugins have told WooCommerce they work with the block checkout."
 msgstr ""
 
-#: includes/Compatibility/Scanner.php:420
+#: includes/Compatibility/Scanner.php:451
 msgid "These plugins have told WooCommerce they do not work with the block checkout. Check with their developers before switching."
 msgstr ""
 
-#: includes/Compatibility/Scanner.php:421
+#: includes/Compatibility/Scanner.php:452
 msgid "These plugins haven't said whether they support the block checkout. Test them on a draft page before switching."
 msgstr ""
 
-#: includes/Compatibility/Scanner.php:422
+#: includes/Compatibility/Scanner.php:453
 msgid "These plugins don't mention WooCommerce, so WooCommerce can't classify them. They're usually unrelated to checkout, but test any that add checkout features."
 msgstr ""
 
@@ -446,8 +446,8 @@ msgstr ""
 
 #. translators: %s: field label.
 #: includes/Fields/CoreFields.php:1190
-#: build/admin.js:47
-#: build/admin.js:49
+#: build/admin.js:48
+#: build/admin.js:50
 #: build/checkout.js:8
 #, php-format,js-format
 msgid "%s (optional)"
@@ -773,7 +773,7 @@ msgstr ""
 
 #. translators: %s: field label.
 #: includes/Fields/RichValues.php:299
-#: build/admin.js:48
+#: build/admin.js:49
 #, php-format,js-format
 msgid "Please fill in %s."
 msgstr ""
@@ -1400,6 +1400,14 @@ msgid "(copy)"
 msgstr ""
 
 #: build/admin.js:17
+msgid "Your checkout page uses the classic checkout. Fields built here appear on the Checkout block only, so nothing you build will show until the page is switched."
+msgstr ""
+
+#: build/admin.js:17
+msgid "Open Compatibility"
+msgstr ""
+
+#: build/admin.js:17
 msgid "None."
 msgstr ""
 
@@ -1462,7 +1470,7 @@ msgid "Preview draft"
 msgstr ""
 
 #: build/admin.js:18
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Something went wrong."
 msgstr ""
 
@@ -1597,7 +1605,7 @@ msgid "Type"
 msgstr ""
 
 #: build/admin.js:24
-#: build/admin.js:58
+#: build/admin.js:59
 msgid "Field settings"
 msgstr ""
 
@@ -1663,8 +1671,8 @@ msgstr ""
 #: build/admin.js:27
 #: build/admin.js:32
 #: build/admin.js:35
-#: build/admin.js:56
 #: build/admin.js:57
+#: build/admin.js:58
 msgid "Untitled field"
 msgstr ""
 
@@ -2090,8 +2098,8 @@ msgstr ""
 
 #: build/admin.js:33
 #: build/admin.js:37
-#: build/admin.js:49
 #: build/admin.js:50
+#: build/admin.js:51
 msgid "Editing"
 msgstr ""
 
@@ -2146,7 +2154,7 @@ msgid "Add field to %s"
 msgstr ""
 
 #: build/admin.js:39
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "Add field"
 msgstr ""
 
@@ -2180,186 +2188,194 @@ msgstr ""
 msgid "Reordering cancelled. %s stayed where it was."
 msgstr ""
 
-#: build/admin.js:44
-#: build/admin.js:58
-msgid "Fields"
-msgstr ""
-
 #. translators: 1: number of fields in use, 2: maximum number of fields.
 #: build/admin.js:45
 #, js-format
 msgid "%1$d of %2$d"
 msgstr ""
 
-#. translators: 1: number of fields in use, 2: maximum number of fields.
+#. translators: %d: number of fields.
 #: build/admin.js:46
+#, js-format
+msgid "%d field"
+msgid_plural "%d fields"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: number of fields in use, 2: maximum number of fields.
+#: build/admin.js:47
 #, js-format
 msgid "%1$d of %2$d fields used"
 msgstr ""
 
-#: build/admin.js:46
+#: build/admin.js:47
+#: build/admin.js:59
+msgid "Fields"
+msgstr ""
+
+#: build/admin.js:47
 msgid "Add fields to the Checkout block, arrange WooCommerce's own, and preview the result. Nothing reaches your checkout until you save."
 msgstr ""
 
-#: build/admin.js:46
+#: build/admin.js:47
 msgid "More options"
 msgstr ""
 
-#: build/admin.js:46
+#: build/admin.js:47
 msgid "Import"
 msgstr ""
 
-#: build/admin.js:46
+#: build/admin.js:47
 msgid "Export"
 msgstr ""
 
-#: build/admin.js:46
+#: build/admin.js:47
 msgid "That file is not valid JSON."
 msgstr ""
 
-#: build/admin.js:46
+#: build/admin.js:47
 msgid "That file does not contain a \"fields\" list."
 msgstr ""
 
-#: build/admin.js:46
+#: build/admin.js:47
 msgid "That file could not be read."
 msgstr ""
 
-#: build/admin.js:46
+#: build/admin.js:47
 msgid "That file could not be imported."
 msgstr ""
 
-#: build/admin.js:48
+#: build/admin.js:49
 msgid "No options yet"
 msgstr ""
 
-#: build/admin.js:48
+#: build/admin.js:49
 msgid "Your text goes here."
 msgstr ""
 
-#: build/admin.js:49
+#: build/admin.js:50
 #: build/checkout.js:6
 msgid "Choose a time"
 msgstr ""
 
 #. translators: %s: checkout section name, e.g. "Shipping address".
-#: build/admin.js:50
+#: build/admin.js:51
 #, js-format
 msgid "Add a field to %s"
 msgstr ""
 
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "United States (US)"
 msgstr ""
 
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "California"
 msgstr ""
 
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "+ Add apartment, suite, etc."
 msgstr ""
 
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "Canada"
 msgstr ""
 
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "United Kingdom (UK)"
 msgstr ""
 
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "Germany"
 msgstr ""
 
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "France"
 msgstr ""
 
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "Australia"
 msgstr ""
 
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "Contact information"
 msgstr ""
 
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "Additional order information"
 msgstr ""
 
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "Shipping options"
 msgstr ""
 
-#: build/admin.js:50
+#: build/admin.js:51
 msgid "Payment options"
 msgstr ""
 
-#: build/admin.js:50
-#: build/admin.js:56
+#: build/admin.js:51
+#: build/admin.js:57
 msgid "Place Order"
 msgstr ""
 
 #. translators: 1: number of fields, 2: placement name, e.g. "Order summary".
-#: build/admin.js:51
+#: build/admin.js:52
 #, js-format
 msgid "%1$d in %2$s"
 msgstr ""
 
-#: build/admin.js:51
-#: build/admin.js:56
+#: build/admin.js:52
+#: build/admin.js:57
 msgid "Checkout preview"
 msgstr ""
 
-#: build/admin.js:51
+#: build/admin.js:52
 msgid "Approximate. Your theme controls the final styling."
 msgstr ""
 
-#: build/admin.js:51
+#: build/admin.js:52
 msgid "Preview mode"
 msgstr ""
 
-#: build/admin.js:51
+#: build/admin.js:52
 msgid "Edit"
 msgstr ""
 
-#: build/admin.js:51
+#: build/admin.js:52
 msgid "Live"
 msgstr ""
 
-#: build/admin.js:51
+#: build/admin.js:52
 msgid "Preview width"
 msgstr ""
 
-#: build/admin.js:51
+#: build/admin.js:52
 msgid "Desktop"
 msgstr ""
 
-#: build/admin.js:51
+#: build/admin.js:52
 msgid "Mobile"
 msgstr ""
 
-#: build/admin.js:51
+#: build/admin.js:52
 msgid "Signed in"
 msgstr ""
 
-#: build/admin.js:51
+#: build/admin.js:52
 msgid "Reset"
 msgstr ""
 
-#: build/admin.js:51
+#: build/admin.js:52
 msgid "Open page"
 msgstr ""
 
 #. translators: 1: contact count phrase, e.g. "1 field in Contact". 2: address count phrase. 3: order information count phrase.
-#: build/admin.js:52
+#: build/admin.js:53
 #, js-format
 msgid "Preview: %1$s, %2$s, %3$s."
 msgstr ""
 
 #. translators: %d: number of fields.
-#: build/admin.js:53
+#: build/admin.js:54
 #, js-format
 msgid "%d field in Contact"
 msgid_plural "%d fields in Contact"
@@ -2367,7 +2383,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %d: number of fields.
-#: build/admin.js:54
+#: build/admin.js:55
 #, js-format
 msgid "%d in Address"
 msgid_plural "%d in Address"
@@ -2375,7 +2391,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %d: number of fields.
-#: build/admin.js:55
+#: build/admin.js:56
 #, js-format
 msgid "%d in Additional order information"
 msgid_plural "%d in Additional order information"
@@ -2383,211 +2399,211 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: a list of counts, e.g. "1 in Order summary, 2 in Before Place Order".
-#: build/admin.js:56
+#: build/admin.js:57
 #, js-format
 msgid "Also: %s."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Address fields also appear in the billing address form."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "the shipping address form only"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Shipping form only"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Use same address for billing"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Shown when the customer unticks \"Use same address for billing\"."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Flat rate"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Cash on delivery"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Add a note to your order"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Additional order information (appears when you add a field)"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "By proceeding with your purchase you agree to our Terms and Conditions and Privacy Policy"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Subtotal"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Shipping"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Total"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Add a coupon"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Fieldwright Pro adds conditions, fees, file uploads, date rules and time slots."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "See what is in it."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Hide this line"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Fieldwright Pro"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Fieldwright Pro is a separate plugin that adds these to the builder you are already using."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "A file upload field."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Conditions, so a field is shown only when the order calls for it."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Required when, the same rules deciding who has to answer."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Checkout fees, priced per option, with or without tax."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Date rules: closed weekdays, blocked dates, a lead time, a furthest date and a minimum age."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Delivery time slots, each with a capacity."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "A column on the orders list for any field."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "CSV export of orders with their answers."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Answers on PDF invoices."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Default values for WooCommerce's own fields."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "One license per site, sold per year from our own site. Nothing is stored on our servers except the license itself."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Read about Fieldwright Pro"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Already have it? Install and activate Fieldwright Pro and its License tab replaces this one."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Required fields"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "WooCommerce's own fields, the fields it carries for you and the ones Fieldwright draws itself all follow this setting."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Say \"(optional)\" after optional fields"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Mark required fields with an asterisk"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Show \"Fields marked with an asterisk are required.\" at the top of the checkout"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Data"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Remove all plugin data when the plugin is deleted"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Field definitions and settings are deleted. Values already saved on orders are kept."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Settings saved."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Save settings"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Fix the problems above to save."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Fix this field to save:"
 msgid_plural "Fix these fields to save:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Checkout fields saved."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Some fields need attention."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Someone else has changed the checkout fields since this screen loaded. Your changes have not been saved. Reload to see theirs, then make yours again."
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "Reload"
 msgstr ""
 
-#: build/admin.js:56
+#: build/admin.js:57
 msgid "New field"
 msgstr ""
 
 #. translators: %d: number of imported fields.
-#: build/admin.js:57
+#: build/admin.js:58
 #, js-format
 msgid "Imported %d field. Review it and save."
 msgid_plural "Imported %d fields. Review them and save."
@@ -2595,36 +2611,36 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: field label.
-#: build/admin.js:58
+#: build/admin.js:59
 #, js-format
 msgid "Removed “%s”"
 msgstr ""
 
-#: build/admin.js:58
+#: build/admin.js:59
 msgid "Undo"
 msgstr ""
 
-#: build/admin.js:58
+#: build/admin.js:59
 msgid "Preview"
 msgstr ""
 
-#: build/admin.js:58
+#: build/admin.js:59
 msgid "Show pane"
 msgstr ""
 
-#: build/admin.js:58
+#: build/admin.js:59
 msgid "Save changes"
 msgstr ""
 
-#: build/admin.js:58
+#: build/admin.js:59
 msgid "Compatibility"
 msgstr ""
 
-#: build/admin.js:58
+#: build/admin.js:59
 msgid "Settings"
 msgstr ""
 
-#: build/admin.js:58
+#: build/admin.js:59
 msgid "Pro"
 msgstr ""
 

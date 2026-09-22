@@ -24,6 +24,14 @@ import { createContext, useContext } from '@wordpress/element';
  */
 export const LICENSE_TAB = 'cbwb-pro-license';
 
+/**
+ * The builder's own Compatibility tab, by key.
+ *
+ * Named here because a component inside the Fields tab links to it, and a key
+ * spelled twice is a key that can drift.
+ */
+export const COMPATIBILITY_TAB = 'compatibility';
+
 export interface TabSwitcher {
 	/** Every tab on the strip, in order, by key. */
 	tabs: string[];

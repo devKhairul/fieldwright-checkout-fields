@@ -14,7 +14,7 @@ import { createBlankField, fieldFromTemplate } from '../lib/fields';
 import type { ImportedConfig } from '../lib/fields';
 import { extraTabs } from '../lib/hooks';
 import { PRO_TAB, proIsAbsent } from '../lib/pro';
-import { TabProvider } from '../lib/tabs';
+import { COMPATIBILITY_TAB, TabProvider } from '../lib/tabs';
 import type { PaneView } from '../lib/layout';
 import type { ErrorMap } from '../lib/validate';
 import { useLayoutMode, visiblePanes } from '../lib/layout';
@@ -41,6 +41,7 @@ import type {
 	Settings,
 } from '../types';
 import { getBootstrap, markingOf } from '../types';
+import CheckoutNotice from './CheckoutNotice';
 import CompatibilityTab from './CompatibilityTab';
 import CoreFieldEditor from './CoreFieldEditor';
 import EmptyState from './EmptyState';
@@ -64,7 +65,7 @@ import Tabs, { tabId, tabPanelId } from './Tabs';
  * these and must not collide with one of them. See `RESERVED_TABS`, which is
  * these plus the one tab the builder only sometimes draws.
  */
-const OWN_TABS = [ 'fields', 'compatibility', 'settings' ] as const;
+const OWN_TABS = [ 'fields', COMPATIBILITY_TAB, 'settings' ] as const;
 
 /**
  * The keys an add-on's tab may not take.
@@ -700,7 +701,7 @@ export default function App() {
 						title: __( 'Fields', 'fieldwright-checkout-fields' ),
 					},
 					{
-						name: 'compatibility',
+						name: COMPATIBILITY_TAB,
 						title: __(
 							'Compatibility',
 							'fieldwright-checkout-fields'
@@ -796,6 +797,15 @@ export default function App() {
 								) }
 							</div>
 						) }
+
+						{ /*
+						 * The one thing that makes every field on this screen
+						 * come to nothing: a checkout page with no Checkout
+						 * block on it. Above the add-on line, which it
+						 * outranks, and under the notices, which are about
+						 * something the merchant did a moment ago.
+						 */ }
+						<CheckoutNotice />
 
 						{ /*
 						 * One line about the paid add-on, under anything the
@@ -978,7 +988,7 @@ export default function App() {
 				 * the scan off the page load: nothing is fetched until the
 				 * merchant asks for it.
 				 */ }
-				{ 'compatibility' === tab && <CompatibilityTab /> }
+				{ COMPATIBILITY_TAB === tab && <CompatibilityTab /> }
 
 				{ 'settings' === tab && (
 					<SettingsTab
