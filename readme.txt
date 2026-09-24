@@ -1,18 +1,20 @@
-=== Fieldwright Checkout Fields for WooCommerce ===
+=== Fieldwright: Checkout Field Editor for WooCommerce Block Checkout ===
 Contributors: khairul89
-Tags: woocommerce, checkout, checkout fields, checkout block, block checkout
+Tags: checkout field editor, custom checkout fields, block checkout, woocommerce checkout, checkout fields
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Add checkout fields and control WooCommerce's own fields on the Checkout block. Live preview, values everywhere, no code.
+Checkout field editor for the WooCommerce block checkout. Add custom fields; rename, hide, require or reorder the default ones. No code.
 
 == Description ==
 
-Fieldwright is a visual editor for the WooCommerce Checkout block.
+**Moved to the WooCommerce Checkout block and your checkout field editor stopped working?** Most field editors were built for the old shortcode checkout and cannot reach the new one. Fieldwright was built for the Checkout block from the start.
+
+Fieldwright is a visual checkout field editor for the WooCommerce Checkout block.
 
 It starts with the thing most field plugins still cannot do there: **WooCommerce's own checkout fields**. Rename them, switch them off, make them optional or required, and drag them into any order in the same list as the fields you add. The change reaches the browser, every country's address rules and the Store API, so an optional postcode really is optional and the order goes through.
 
@@ -151,12 +153,13 @@ No. Every save carries the revision of the configuration it was made against. If
 
 == Screenshots ==
 
-1. The builder: every field on the checkout in one outline, the settings for the field you picked, and a preview of the page beside them.
-2. WooCommerce's own fields sit in the same outline. Rename them, switch them off, make them optional or required, and drag them into a new order.
-3. Pick the field type. The group you open the picker in decides where the field goes on the checkout.
-4. The Checkout block with the fields in place, in the contact, address, shipping and order sections.
-5. Answers arrive on the order screen, beside the address and in a box you can edit.
-6. Answers on the order confirmation page and in the order emails, each switchable per field.
+1. Add a field in a few clicks and watch it appear in the checkout preview, on a desktop or a phone.
+2. The builder: every field on the checkout in one outline, the settings for the field you picked, and a preview of the page beside them.
+3. WooCommerce's own fields sit in the same outline. Rename them, switch them off, make them optional or required, and drag them into a new order.
+4. Pick the field type. The group you open the picker in decides where the field goes on the checkout.
+5. The Checkout block with the fields in place, in the contact, address, shipping and order sections.
+6. Answers arrive on the order screen, beside the address and in a box you can edit.
+7. Answers on the order confirmation page and in the order emails, each switchable per field.
 
 == For developers ==
 
@@ -165,6 +168,9 @@ Fieldwright is built to be extended, and every hook, filter, JavaScript API and 
 **Source code.** The files in `build/` are compiled and minified from the TypeScript and React sources in `src/`, and both the sources and the build tooling are in that same repository. To rebuild them: `npm ci`, then `npm run build`, which runs `wp-scripts build`.
 
 == Changelog ==
+
+= 1.2.2 =
+* The plugin is now listed as "Fieldwright: Checkout Field Editor for WooCommerce Block Checkout", a name that says what it is. Nothing else changes: the same plugin, slug, settings and fields.
 
 = 1.2.1 =
 * The field count above the outline reads as a count of what you have built. The ceiling of 50 fields is named only once you are within ten of it, where it is something you can act on.
